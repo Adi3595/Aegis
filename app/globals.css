@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-bg: #040814;
+  --color-secondary-bg: #0C1224;
+  --color-surface: #0C1224;
+  --color-glass: rgba(18, 28, 52, 0.55);
+  --color-primary-accent: #5B8CFF;
+  --color-secondary-accent: #22D3EE;
+  --color-ai-accent: #9B8CFF;
+  --color-success: #22C55E;
+  --color-warning: #FBBF24;
+  --color-error: #F43F5E;
+  --color-white: #F8FAFC;
+  --color-muted-text: #94A3B8;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --animate-ripple: ripple 1s ease-in-out infinite;
+
+  @keyframes ripple {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  @keyframes shimmer {
+    100% { transform: translateX(100%); }
+  }
+
+  @keyframes mesh {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+}
+
+@layer utilities {
+  .bg-mesh {
+    background: radial-gradient(at 0% 0%, rgba(124, 92, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(50, 212, 255, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(124, 92, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(50, 212, 255, 0.1) 0px, transparent 50%);
+    background-size: 200% 200%;
+    animation: mesh 15s ease infinite;
+  }
+
+  @media (prefers-reduced-motion) {
+    .bg-mesh {
+      animation: none;
+      background-position: center;
+    }
+  }
+}
+
+@layer base {
+  :root {
+    --background: #040814;
+    --foreground: #F8FAFC;
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-display {
+    letter-spacing: -0.03em;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.04; /* Very subtle noise */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background-color: rgba(124, 92, 255, 0.3); /* AI Accent with opacity */
+    color: #F8FAFC;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050816; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #121A2F; 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0D1324; 
+}
+
+/* Presentation Mode Overrides */
+.presentation-mode {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  font-size: 110%;
+}
+
+.presentation-mode .hide-in-presentation {
+  display: none !important;
+}
+
+.presentation-mode .expand-in-presentation {
+  grid-column: span 12 !important;
+}

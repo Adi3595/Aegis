@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEGIS - Offline</title>
+  <style>
+    body {
+      background-color: #050505;
+      color: white;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 { color: #ff5757; margin-bottom: 10px; }
+    p { color: #888; max-width: 400px; margin-bottom: 30px; }
+    button {
+      padding: 12px 24px;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Connection Lost</h1>
+  <p>You are currently offline. AEGIS OS requires a network connection for live telemetry, but cached maps and basic structural data remain available.</p>
+  <button onclick="window.location.reload()">Retry Connection</button>
+</body>
+</html>

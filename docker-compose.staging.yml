@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: ${CONTAINER_REGISTRY:-ghcr.io}/aegis-frontend:${IMAGE_TAG:-latest}
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=https://api.staging.aegis.internal
+      - NEXT_PUBLIC_WS_URL=wss://api.staging.aegis.internal
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    image: ${CONTAINER_REGISTRY:-ghcr.io}/aegis-backend:${IMAGE_TAG:-latest}
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/aegis
+      - MONITORING_PROVIDER=console # Or azure when integrated
+      - SECRET_PROVIDER=env # Or keyvault when integrated
+      - RATE_LIMIT_ENABLED=true
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=aegis
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redisdata:/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redisdata:

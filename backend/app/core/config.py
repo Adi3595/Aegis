@@ -1,0 +1,37 @@
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import AnyHttpUrl, validator
+from typing import List, Union
+
+class Settings(BaseSettings):
+    PROJECT_NAME: str = "AEGIS AI Backend"
+    VERSION: str = "0.1.0"
+    ENVIRONMENT: str = "development"
+    DEBUG: bool = True
+    
+    SECRET_KEY: str = "supersecretkey"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    
+    # Comma-separated list of origins
+    BACKEND_CORS_ORIGINS: str = "http://localhost:3000"
+    
+    @property
+    def cors_origins(self) -> List[str]:
+        if not self.BACKEND_CORS_ORIGINS:
+            return []
+        return [item.strip() for item in self.BACKEND_CORS_ORIGINS.split(",") if item.strip()]
+
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/aegis_ai"
+    REDIS_URL: str = "redis://localhost:6379/0"
+
+    # Azure OpenAI
+    AZURE_OPENAI_API_KEY: str = ""
+    AZURE_OPENAI_ENDPOINT: str = ""
+    AZURE_OPENAI_API_VERSION: str = "2024-02-15-preview"
+    AZURE_OPENAI_CHAT_DEPLOYMENT: str = "gpt-4.1"
+    AZURE_OPENAI_FAST_DEPLOYMENT: str = "gpt-4.1-mini"
+    AZURE_OPENAI_EMBEDDING_DEPLOYMENT: str = "text-embedding-3-large"
+
+    model_config = SettingsConfigDict(case_sensitive=True, env_file=".env")
+
+settings = Settings()

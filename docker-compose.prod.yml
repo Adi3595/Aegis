@@ -1,0 +1,28 @@
+version: '3.8'
+
+# Production Compose File
+# Assumes Database and Redis are managed external services (e.g. Azure Database for PostgreSQL, Azure Cache for Redis)
+
+services:
+  frontend:
+    image: ${CONTAINER_REGISTRY:-ghcr.io}/aegis-frontend:${IMAGE_TAG:-latest}
+    ports:
+      - "80:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=${API_URL}
+      - NEXT_PUBLIC_WS_URL=${WS_URL}
+    restart: always
+
+  backend:
+    image: ${CONTAINER_REGISTRY:-ghcr.io}/aegis-backend:${IMAGE_TAG:-latest}
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=${REDIS_URL}
+      - DATABASE_URL=${DATABASE_URL}
+      - MONITORING_PROVIDER=${MONITORING_PROVIDER:-console}
+      - SECRET_PROVIDER=${SECRET_PROVIDER:-env}
+      - RATE_LIMIT_ENABLED=true
+    restart: always
