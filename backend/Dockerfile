@@ -29,7 +29,7 @@ RUN pip install --no-cache-dir /wheels/*
 
 # Copy application code
 COPY ./app ./app
-COPY ./alembic ./alembic
+COPY ./migrations ./migrations
 COPY alembic.ini .
 
 # Set permissions
