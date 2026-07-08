@@ -37,10 +37,10 @@ export function ResponderCopilotWidget() {
             <span className="text-xs font-bold uppercase tracking-wider text-error flex items-center gap-1 mb-1">
               <AlertTriangle className="w-3 h-3" /> Priority Target Detected
             </span>
-            <h4 className="text-lg font-semibold text-white">{latestAlert.message}</h4>
+            <h4 className="text-lg font-semibold text-white">{latestAlert.description}</h4>
             <div className="flex gap-2 mt-2">
               <span className="bg-black/30 border border-white/10 text-xs px-2 py-1 rounded text-muted-text font-mono">
-                Zone: {latestAlert.type} (Inferred)
+                Zone: {latestAlert.title} (Inferred)
               </span>
               <span className="bg-ai-accent/20 border border-ai-accent/30 text-xs px-2 py-1 rounded text-ai-accent font-medium">
                 AI Confidence: 94%

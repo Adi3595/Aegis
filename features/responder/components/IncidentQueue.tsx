@@ -21,8 +21,8 @@ export function IncidentQueue() {
 
   const filteredEvents = events.filter(e => {
     if (statusFilter !== e.status) return false
-    if (filter === "Security" && !e.type.toLowerCase().includes("security") && !e.type.toLowerCase().includes("crowd")) return false
-    if (filter === "Medical" && !e.type.toLowerCase().includes("medical") && !e.type.toLowerCase().includes("safety")) return false
+    if (filter === "Security" && !e.title.toLowerCase().includes("security") && !e.title.toLowerCase().includes("crowd")) return false
+    if (filter === "Medical" && !e.title.toLowerCase().includes("medical") && !e.title.toLowerCase().includes("safety")) return false
     return true
   }).reverse()
 
@@ -76,7 +76,7 @@ export function IncidentQueue() {
                 <div className="flex items-center gap-2">
                   {evt.status === 'active' ? <AlertCircle className="w-4 h-4 text-error" /> : <CheckCircle2 className="w-4 h-4 text-success" />}
                   <span className={`text-xs font-bold uppercase tracking-wider ${evt.status === 'active' ? 'text-error' : 'text-success'}`}>
-                    {evt.type}
+                    {evt.title}
                   </span>
                 </div>
                 <div className="flex items-center gap-1 text-xs text-muted-text font-mono">
@@ -84,7 +84,7 @@ export function IncidentQueue() {
                   {new Date(evt.timestamp).toLocaleTimeString([], { hour: '2-digit', minute:'2-digit', second: '2-digit' })}
                 </div>
               </div>
-              <p className="text-sm text-white leading-snug">{evt.message}</p>
+              <p className="text-sm text-white leading-snug">{evt.description}</p>
               
               {evt.status === "active" && (
                 <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">

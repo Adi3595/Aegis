@@ -120,7 +120,7 @@ export default function StadiumScene() {
         dpr={[1, 2]} // Optimize pixel ratio
         gl={{ antialias: false }} // Disable antialias for performance if using postprocessing or rely on dpr
       >
-        <fogExp2 attach="fog" color="#050816" density={0.03} />
+        <fogExp2 attach="fog" args={["#050816", 0.03]} />
         
         <React.Suspense fallback={null}>
           <StadiumGeometry />

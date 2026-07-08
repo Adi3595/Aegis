@@ -15,7 +15,7 @@ export function IncidentsWorkspace() {
   const filteredEvents = events.filter(e => {
     if (filter === "active" && e.status !== "active") return false
     if (filter === "resolved" && e.status !== "resolved") return false
-    if (search && !e.message.toLowerCase().includes(search.toLowerCase()) && !e.type.toLowerCase().includes(search.toLowerCase())) return false
+    if (search && !e.description.toLowerCase().includes(search.toLowerCase()) && !e.title.toLowerCase().includes(search.toLowerCase())) return false
     return true
   }).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
 
@@ -95,15 +95,15 @@ export function IncidentsWorkspace() {
                 </div>
                 <div className="col-span-2">
                   <span className="bg-white/5 border border-white/10 text-white/80 px-2 py-1 rounded text-xs font-medium">
-                    {evt.type}
+                    {evt.title}
                   </span>
                 </div>
                 <div className="col-span-4 text-sm text-white">
-                  {evt.message}
+                  {evt.description}
                 </div>
                 <div className="col-span-2 flex justify-end gap-2">
                   {evt.status === 'active' && (
-                    <Button variant="outline" size="sm" onClick={() => handleAskAI(evt.message)} className="h-8 text-xs border-ai-accent/30 text-ai-accent hover:bg-ai-accent/10">
+                    <Button variant="outline" size="sm" onClick={() => handleAskAI(evt.description)} className="h-8 text-xs border-ai-accent/30 text-ai-accent hover:bg-ai-accent/10">
                       Ask AI
                     </Button>
                   )}

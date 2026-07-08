@@ -6,13 +6,13 @@ import { Leaf, Droplet, Zap, Recycle, ArrowDownRight, ArrowUpRight } from "lucid
 import { useSimulationStore } from "@/features/simulation/store/simulationStore"
 
 export function SustainabilityWorkspace() {
-  const { tick } = useSimulationStore()
+  const { matchTime } = useSimulationStore()
   
   // Mock derived metrics from the simulation tick
-  const energyKwh = 15000 + (tick * 12.5)
-  const waterLiters = 45000 + (tick * 45)
-  const wasteKg = 1200 + (tick * 5)
-  const carbonSaved = (tick * 2.1).toFixed(1)
+  const energyKwh = 15000 + (matchTime * 12.5)
+  const waterLiters = 45000 + (matchTime * 45)
+  const wasteKg = 1200 + (matchTime * 5)
+  const carbonSaved = (matchTime * 2.1).toFixed(1)
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 h-full">

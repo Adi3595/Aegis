@@ -68,13 +68,13 @@ export function LiveOperationsWorkspace() {
                 <div key={evt.id} className="text-xs pb-3 border-b border-white/5 last:border-0 last:pb-0">
                   <div className="flex items-center justify-between mb-1">
                     <span className={`font-semibold ${evt.status === 'active' ? 'text-warning' : 'text-success'}`}>
-                      {evt.type}
+                      {evt.title}
                     </span>
                     <span className="text-muted-text/50 font-mono">
                       {new Date(evt.timestamp).toLocaleTimeString([], { hour: '2-digit', minute:'2-digit', second: '2-digit' })}
                     </span>
                   </div>
-                  <p className="text-muted-text">{evt.message}</p>
+                  <p className="text-muted-text">{evt.description}</p>
                 </div>
               ))
             )}

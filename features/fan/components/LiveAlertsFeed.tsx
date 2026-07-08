@@ -37,8 +37,8 @@ export function LiveAlertsFeed() {
             <div key={alert.id} className="p-3 rounded-xl border border-warning/20 bg-warning/5 flex items-start gap-3">
               <AlertTriangle className="w-4 h-4 text-warning shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-sm font-semibold text-white mb-0.5"><Translate>{alert.type}</Translate></h4>
-                <p className="text-xs text-muted-text"><Translate>{alert.message}</Translate></p>
+                <h4 className="text-sm font-semibold text-white mb-0.5"><Translate>{alert.title}</Translate></h4>
+                <p className="text-xs text-muted-text"><Translate>{alert.description}</Translate></p>
               </div>
             </div>
           ))

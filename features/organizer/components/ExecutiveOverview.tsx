@@ -6,7 +6,7 @@ import { Users, AlertTriangle, ShieldCheck, Zap } from "lucide-react"
 import { useSimulationStore } from "@/features/simulation/store/simulationStore"
 
 export function ExecutiveOverview() {
-  const { zones, events, status } = useSimulationStore()
+  const { zones, events, status, metrics } = useSimulationStore()
   
   // Calculate aggregate metrics
   const totalOccupancy = Object.values(zones).reduce((acc, z) => acc + z.occupancy, 0)
@@ -14,7 +14,7 @@ export function ExecutiveOverview() {
   const activeAlerts = events.filter(e => e.status === "active").length
   
   const densityRatio = totalCapacity > 0 ? totalOccupancy / totalCapacity : 0
-  const isEmergency = status === "Emergency" || status === "Evacuating"
+  const isEmergency = metrics?.emergencyStatus === "Critical" || metrics?.emergencyStatus === "Elevated"
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

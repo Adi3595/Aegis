@@ -5,8 +5,8 @@ import { useSimulationStore } from "@/features/simulation/store/simulationStore"
 import { AlertTriangle, AlertOctagon } from "lucide-react"
 
 export function CriticalAlertBanner() {
-  const { status, events } = useSimulationStore()
-  const isEmergency = status === "Emergency" || status === "Evacuating"
+  const { status, events, metrics } = useSimulationStore()
+  const isEmergency = metrics?.emergencyStatus === "Critical" || metrics?.emergencyStatus === "Elevated"
   
   if (!isEmergency) return null
 
@@ -19,7 +19,7 @@ export function CriticalAlertBanner() {
         <div>
           <h2 className="font-bold text-lg leading-none uppercase tracking-widest">{status} DECLARED</h2>
           {latestAlert && (
-            <p className="text-sm font-medium mt-1">Latest Intelligence: {latestAlert.message}</p>
+            <p className="text-sm font-medium mt-1">Latest Intelligence: {latestAlert.description}</p>
           )}
         </div>
       </div>

@@ -6,7 +6,7 @@ import { useSimulationStore } from "@/features/simulation/store/simulationStore"
 import { HeartPulse, Users, ShieldCheck, Activity, LineChart, Umbrella } from "lucide-react"
 
 export function ExecutiveKPIHeader() {
-  const { zones, events, status, tick } = useSimulationStore()
+  const { zones, events, status } = useSimulationStore()
   
   const totalOccupancy = Object.values(zones).reduce((acc, z) => acc + z.occupancy, 0)
   const totalCapacity = Object.values(zones).reduce((acc, z) => acc + (z.capacity || 0), 0)
@@ -16,7 +16,6 @@ export function ExecutiveKPIHeader() {
   const fanSatisfaction = Math.max(50, Math.min(98, 95 - (activeAlerts * 2) - ((totalOccupancy/totalCapacity) * 5)))
   const healthScore = Math.max(0, 100 - (activeAlerts * 5))
   const avgResponseTime = 2.4 + (activeAlerts * 0.3)
-  const isEmergency = status === "Emergency" || status === "Evacuating"
 
   return (
     <div className="tour-step-kpis grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">

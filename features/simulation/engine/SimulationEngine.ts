@@ -8,7 +8,7 @@ import { useAuthStore } from "@/features/auth/store/authStore"
  */
 class SimulationEngine {
   private getHeaders() {
-    const token = useAuthStore.getState().accessToken
+    const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : "mock"
     return {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`
