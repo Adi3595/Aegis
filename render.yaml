@@ -1,0 +1,66 @@
+services:
+  # FastAPI Backend Service
+  - type: web
+    name: aegis-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    region: ohio
+    plan: starter
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "False"
+      - key: PROJECT_NAME
+        value: "AEGIS AI Backend"
+      - key: VERSION
+        value: "1.0.0"
+      - key: LOG_LEVEL
+        value: "INFO"
+      
+      # Security
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: "HS256"
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+        
+      # CORS - Ensure to update this with your Vercel URL
+      - key: BACKEND_CORS_ORIGINS
+        value: "https://your-vercel-project.vercel.app"
+        
+      # Database
+      - key: DATABASE_URL
+        fromDatabase:
+          name: aegis-postgres
+          property: connectionString
+          
+      # Redis
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: aegis-redis
+          property: connectionString
+          
+      # AI Configuration
+      - key: AZURE_OPENAI_API_KEY
+        sync: false
+      - key: AZURE_OPENAI_ENDPOINT
+        sync: false
+
+  # Redis Service
+  - type: redis
+    name: aegis-redis
+    region: ohio
+    plan: free
+    ipAllowList: [] # Allow internal Render traffic only
+
+databases:
+  # PostgreSQL Database
+  - name: aegis-postgres
+    region: ohio
+    plan: free
+    postgresMajorVersion: 15
