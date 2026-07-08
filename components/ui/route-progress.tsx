@@ -7,7 +7,7 @@ import { useProgressStore } from "@/store/progressStore"
 
 // This hook intercepts route changes in Next.js App Router
 // using pathname and searchparams changes as a proxy for navigation completion
-export function RouteProgressProvider() {
+function RouteProgressProviderInner() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { isAnimating, progress, start, done, setProgress } = useProgressStore()
@@ -96,5 +96,13 @@ export function RouteProgressProvider() {
         style={{ transformOrigin: "0% 50%" }}
       />
     </div>
+  )
+}
+
+export function RouteProgressProvider() {
+  return (
+    <React.Suspense fallback={null}>
+      <RouteProgressProviderInner />
+    </React.Suspense>
   )
 }

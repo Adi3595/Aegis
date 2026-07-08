@@ -33,8 +33,8 @@ export function VolunteerCopilot() {
     setIsTyping(true)
 
     try {
-      const response = await orchestrator.ask(text)
-      setMessages(prev => [...prev, { role: "ai", text: response.answer }])
+      await orchestrator.ask(text)
+      setMessages(prev => [...prev, { role: "ai", text: "Your request has been received. Please check the main AI Workspace for a detailed response." }])
     } catch (err) {
       setMessages(prev => [...prev, { role: "ai", text: "Connection error. Please check offline instructions." }])
     } finally {
