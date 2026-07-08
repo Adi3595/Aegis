@@ -1,7 +1,7 @@
 from typing import Dict, List, Any
 import uuid
 import time
-from app.api.v1.simulation import manager as ws_manager
+from app.services.websocket_manager import manager as ws_manager
 
 class NotificationService:
     def __init__(self):
