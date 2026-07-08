@@ -22,6 +22,16 @@ class Settings(BaseSettings):
         return [item.strip() for item in self.BACKEND_CORS_ORIGINS.split(",") if item.strip()]
 
     DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/aegis_ai"
+    
+    @validator("DATABASE_URL", pre=True)
+    def assemble_db_connection(cls, v: str | None) -> str:
+        if isinstance(v, str):
+            if v.startswith("postgres://"):
+                v = v.replace("postgres://", "postgresql://", 1)
+            if v.startswith("postgresql://"):
+                v = v.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return v
+
     REDIS_URL: str = "redis://localhost:6379/0"
 
     # Azure OpenAI
