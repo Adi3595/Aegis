@@ -8,14 +8,13 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     // Only initialize Lenis on devices that typically use smooth scrolling (e.g. desktop)
     // Optional, but often best practice to avoid conflicts with native mobile scrolling
     const lenis = new Lenis({
-      lerp: 0.08, // Physics-based smooth scroll instead of fixed duration
-      direction: "vertical", // vertical, horizontal
-      gestureDirection: "vertical", // vertical, horizontal, both
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
       touchMultiplier: 2,
-      infinite: false,
     })
 
     function raf(time: number) {

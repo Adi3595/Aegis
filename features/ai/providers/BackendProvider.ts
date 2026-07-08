@@ -3,7 +3,7 @@ import { useAuthStore } from "@/features/auth/store/authStore"
 
 export class BackendAIProvider implements AIProvider {
   private getHeaders() {
-    const token = useAuthStore.getState().accessToken
+    const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : "mock"
     return {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`

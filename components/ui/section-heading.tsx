@@ -26,7 +26,7 @@ export function SectionHeading({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         className="text-3xl font-display font-bold tracking-tight text-white sm:text-4xl"
-        {...props}
+        {...(props as any)}
       >
         {title}
       </motion.h2>

@@ -41,7 +41,7 @@ const ZONE_SHAPES: Record<string, { d?: string, x?: number, y?: number, w?: numb
   "volunteer-hub": { type: "rect", x: 450, y: 760, w: 100, h: 30 },
 }
 
-export function StadiumMap() {
+export function StadiumMap({ className = "" }: { className?: string }) {
   const selectedZoneId = useDigitalTwinStore(state => state.selectedZoneId)
   const setSelectedZoneId = useDigitalTwinStore(state => state.setSelectedZoneId)
 
@@ -49,6 +49,8 @@ export function StadiumMap() {
   const handleBgClick = () => {
     setSelectedZoneId(null)
   }
+
+  const containerRef = React.useRef<HTMLDivElement>(null)
 
   return (
     <div className={`tour-step-map relative w-full h-full flex items-center justify-center bg-[#0a0a0f] overflow-hidden rounded-2xl border border-white/10 ${className}`}>
@@ -76,13 +78,13 @@ export function StadiumMap() {
 
         {/* Pitch (Static) */}
         <rect 
-          x={320} y={270} w={360} h={460} rx={40}
+          x={320} y={270} width={360} height={460} rx={40}
           fill="rgba(255, 255, 255, 0.02)" 
           stroke="rgba(255,255,255,0.1)" 
           strokeWidth="2"
         />
         <rect 
-          x={350} y={300} w={300} h={400} 
+          x={350} y={300} width={300} height={400} 
           fill="transparent" 
           stroke="rgba(255,255,255,0.15)" 
           strokeWidth="2"
