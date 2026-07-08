@@ -66,7 +66,7 @@ export function ResourcesWorkspace() {
 
             <div className="bg-surface/50 border border-white/5 rounded-xl p-3">
               <h4 className="text-sm font-semibold text-white mb-1">Medical Pre-positioning</h4>
-              <p className="text-xs text-muted-text mb-3">Temperature > 85°F. Move 2 medical teams to uncovered East Stand sectors.</p>
+              <p className="text-xs text-muted-text mb-3">Temperature &gt; 85°F. Move 2 medical teams to uncovered East Sector.</p>
               <button className="w-full bg-ai-accent/20 hover:bg-ai-accent/30 text-ai-accent border border-ai-accent/30 py-1.5 rounded-lg text-xs font-medium transition-colors">
                 Dispatch Teams
               </button>

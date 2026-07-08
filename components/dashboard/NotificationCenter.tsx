@@ -7,6 +7,7 @@ import { useLayoutStore } from "@/store/layoutStore"
 import { useNotificationStore } from "@/features/notifications/store/notificationStore"
 import { cn } from "@/lib/utils"
 
+export function NotificationCenter() {
   const { notificationCenterOpen, setNotificationCenter } = useLayoutStore()
   const { notifications, markAsRead, markAllAsRead, preferences, setLanguage } = useNotificationStore()
 

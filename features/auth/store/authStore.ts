@@ -9,6 +9,7 @@ export type UserRole =
   | "Medical" 
   | "Vendor" 
   | "Administrator"
+  | "Executive"
 
 export interface User {
   id: string

@@ -1,11 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { useToast } from "@/components/ui/toast"
+import { toast } from "@/store/toastStore"
 import { RefreshCw } from "lucide-react"
 
 export function ServiceWorkerRegister() {
-  const { addToast } = useToast()
 
   React.useEffect(() => {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
@@ -22,12 +21,11 @@ export function ServiceWorkerRegister() {
                 if (installingWorker.state === "installed") {
                   if (navigator.serviceWorker.controller) {
                     // New update available
-                    addToast({
-                      title: "Update Available",
-                      description: "A new version of AEGIS is available. Refresh to update.",
-                      type: "info",
-                      duration: 10000,
-                    })
+                    toast.info(
+                      "Update Available",
+                      "A new version of AEGIS is available. Refresh to update.",
+                      { duration: 10000 }
+                    )
                   } else {
                     // Content is cached for offline use
                     console.log("Content is cached for offline use.")
@@ -42,7 +40,7 @@ export function ServiceWorkerRegister() {
         )
       })
     }
-  }, [addToast])
+  }, [])
 
   return null
 }

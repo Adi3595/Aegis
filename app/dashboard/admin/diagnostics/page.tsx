@@ -127,7 +127,7 @@ export default function DiagnosticsDashboard() {
             <div className="flex items-center justify-between p-3 rounded-lg bg-black/20 border border-white/5">
               <div>
                 <div className="font-semibold text-white">Digital Twin Synchronization</div>
-                <div className="text-xs text-muted-text">Redis PubSub -> WebSocket Broadcast</div>
+                <div className="text-xs text-muted-text">Redis PubSub &gt; WebSocket Broadcast</div>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-primary-accent animate-pulse" />

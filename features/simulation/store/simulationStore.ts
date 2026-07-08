@@ -104,21 +104,11 @@ export const useSimulationStore = create<SimulationStore>((set) => ({
   
   addEvent: (event) => 
     set((state) => ({ events: [event, ...state.events] })),
-      socket.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data)
-          
-          if (data.type === "NOTIFICATION") {
-            const { user } = useAuthStore.getState()
-            
-            // Role-based filtering
-            if (!data.targetRoles || (user && data.targetRoles.includes(user.role))) {
-               useNotificationStore.getState().addNotification(data)
-            }
-            return
-          }
-
-          if (data.type === "TICK_UPDATE") { ...e, status: "resolved" } : e
+    
+  resolveEvent: (eventId) =>
+    set((state) => ({
+      events: state.events.map((e) =>
+        e.id === eventId ? { ...e, status: "resolved" } : e
       )
     })),
 

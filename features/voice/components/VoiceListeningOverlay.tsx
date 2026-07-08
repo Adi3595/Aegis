@@ -4,25 +4,25 @@ import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useVoiceStore } from "../store/useVoiceStore"
 import { Mic, X } from "lucide-react"
-import { useChatStore } from "@/features/ai/store/chatStore"
+import { orchestrator } from "@/features/ai/engine/Orchestrator"
 import { useLayoutStore } from "@/store/layoutStore"
 
 export function VoiceListeningOverlay() {
   const { isListening, interimTranscript, transcript, stopListening, clearTranscript } = useVoiceStore()
-  const { sendMessage } = useChatStore()
+
   const { setRightPanel } = useLayoutStore()
 
   // Auto-send when listening stops and there's a final transcript
   React.useEffect(() => {
     if (!isListening && transcript) {
       // Send to orchestrator
-      sendMessage(transcript.trim())
+      orchestrator.ask(transcript.trim())
       // Make sure panel is open to see response
       setRightPanel(true)
       // Clear
       clearTranscript()
     }
-  }, [isListening, transcript, sendMessage, setRightPanel, clearTranscript])
+  }, [isListening, transcript, setRightPanel, clearTranscript])
 
   return (
     <AnimatePresence>

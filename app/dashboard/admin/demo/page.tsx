@@ -4,16 +4,15 @@ import * as React from "react"
 import { useDemoStore } from "@/store/demoStore"
 import { GlassPanel } from "@/components/ui/glass-panel"
 import { Play, RotateCcw, CloudLightning, Activity, AlertTriangle, MonitorPlay, Users } from "lucide-react"
-import { useToast } from "@/components/ui/toast"
+import { toast } from "@/store/toastStore"
 import { motion } from "framer-motion"
 
 export default function DemoControlCenter() {
   const { isDemoMode, presentationMode, toggleDemoMode, togglePresentationMode, activeScenario, setActiveScenario, resetDemo, setTourActive } = useDemoStore()
-  const { addToast } = useToast()
 
   const handleScenario = async (scenario: string, seed: number) => {
     try {
-      addToast({ title: "Injecting Scenario...", description: `Initializing ${scenario} (Seed: ${seed})`, type: "info" })
+      toast.info("Injecting Scenario...", `Initializing ${scenario} (Seed: ${seed})`)
       
       const res = await fetch("/api/v1/simulation/scenario", {
         method: "POST",
@@ -23,12 +22,12 @@ export default function DemoControlCenter() {
 
       if (res.ok) {
         setActiveScenario(scenario)
-        addToast({ title: "Scenario Active", description: `${scenario} dynamics running.`, type: "success" })
+        toast.success("Scenario Active", `${scenario} dynamics running.`)
       } else {
         throw new Error("Failed to trigger scenario")
       }
     } catch (e) {
-      addToast({ title: "Scenario Failed", description: "Could not reach Simulation Engine.", type: "error" })
+      toast.error("Scenario Failed", "Could not reach Simulation Engine.")
     }
   }
 
@@ -47,7 +46,7 @@ export default function DemoControlCenter() {
           <button 
             onClick={() => {
               toggleDemoMode(!isDemoMode)
-              addToast({ title: "Mode Toggled", description: `Demo Mode ${!isDemoMode ? 'Enabled' : 'Disabled'}`, type: "info" })
+              toast.info("Mode Toggled", `Demo Mode ${!isDemoMode ? 'Enabled' : 'Disabled'}`)
             }}
             className={`px-4 py-2 rounded-md font-semibold transition-all ${isDemoMode ? 'bg-primary-accent text-black' : 'bg-white/10 text-white hover:bg-white/20'}`}
           >
@@ -117,7 +116,7 @@ export default function DemoControlCenter() {
             <button 
               onClick={() => {
                 resetDemo()
-                addToast({ title: "Environment Reset", description: "Simulation and Demo state cleared.", type: "success" })
+                toast.success("Environment Reset", "Simulation and Demo state cleared.")
               }}
               className="w-full py-2 rounded-md bg-error/10 hover:bg-error/20 text-error font-semibold flex items-center justify-center gap-2 transition-all"
             >
