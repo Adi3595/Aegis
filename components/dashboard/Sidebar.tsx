@@ -15,6 +15,7 @@ import {
   LifeBuoy, 
   ShieldAlert,
   ChevronRight,
+  ChevronLeft,
   LogOut,
   MonitorPlay
 } from "lucide-react"
