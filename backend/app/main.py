@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.api.v1.router import api_router
-from app.api.v1 import chat, simulation, map, translate, auth, analytics, notifications, health
+
 from app.core.middleware import RequestContextMiddleware
 from app.core.exceptions import APIException, api_exception_handler, unhandled_exception_handler
 from app.database.redis import init_redis, get_redis
@@ -63,11 +63,6 @@ if settings.cors_origins:
 
 # Routers
 app.include_router(api_router, prefix="/api/v1")
-app.include_router(map.router, prefix="/api/v1/map", tags=["Map"])
-app.include_router(translate.router, prefix="/api/v1/ai", tags=["Translate"])
-app.include_router(analytics.router, prefix="/api/v1/analytics", tags=["Analytics"])
-app.include_router(notifications.router, prefix="/api/v1/notifications", tags=["Notifications"])
-app.include_router(health.router, prefix="/api/v1/health", tags=["Health"])
 
 @app.get("/")
 async def root():
