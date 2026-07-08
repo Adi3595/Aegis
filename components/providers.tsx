@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import Lenis from 'lenis';
+import Lenis from '@studio-freight/lenis';
 
 function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
