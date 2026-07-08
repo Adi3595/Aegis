@@ -42,6 +42,9 @@ class Settings(BaseSettings):
     AZURE_OPENAI_FAST_DEPLOYMENT: str = "gpt-4.1-mini"
     AZURE_OPENAI_EMBEDDING_DEPLOYMENT: str = "text-embedding-3-large"
 
+    # Groq
+    GROQ_API_KEY: str = ""
+
     model_config = SettingsConfigDict(case_sensitive=True, env_file=".env")
 
 settings = Settings()
