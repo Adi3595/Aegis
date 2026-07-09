@@ -17,6 +17,9 @@ from app.services.websocket_manager import manager as ws_manager
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Run database migrations automatically on startup
+    os.system("alembic upgrade head")
+    
     # Startup
     await init_redis()
     persistence_service.start()
