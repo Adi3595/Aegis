@@ -16,7 +16,9 @@ class WebSocketService {
     const wsUrl = process.env.NEXT_PUBLIC_WS_URL || process.env.NEXT_PUBLIC_API_URL?.replace("http", "ws") || "ws://localhost:8000/api/v1"
     
     try {
-      this.ws = new WebSocket(`${wsUrl}/simulation/ws`)
+      const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : null
+      const tokenParam = token ? `?token=${token}` : ""
+      this.ws = new WebSocket(`${wsUrl}/simulation/ws${tokenParam}`)
 
       this.ws.onopen = () => {
         console.log("Simulation WebSocket connected")

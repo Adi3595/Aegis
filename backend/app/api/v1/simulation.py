@@ -3,9 +3,10 @@ from pydantic import BaseModel
 from typing import List
 import uuid
 
+from app.database.session import get_db
 from app.services.websocket_manager import manager as ws_manager
 from app.services.simulation_service import simulation_engine
-from app.dependencies.auth import get_current_user
+from app.dependencies.auth import get_current_user, RequireRole
 from app.models.user import User
 
 router = APIRouter()
@@ -33,44 +34,32 @@ async def get_state(current_user: User = Depends(get_current_user)):
     return simulation_engine.get_full_state()
 
 @router.post("/start")
-async def start_simulation(current_user: User = Depends(get_current_user)):
-    if current_user.role not in ["admin", "organizer", "operator"]:
-        raise HTTPException(status_code=403, detail="Not authorized to control simulation")
+async def start_simulation(current_user: User = Depends(RequireRole(["Administrator", "Organizer", "Executive"]))):
     simulation_engine.start()
     return {"message": "Simulation started"}
 
 @router.post("/pause")
-async def pause_simulation(current_user: User = Depends(get_current_user)):
-    if current_user.role not in ["admin", "organizer", "operator"]:
-        raise HTTPException(status_code=403, detail="Not authorized to control simulation")
+async def pause_simulation(current_user: User = Depends(RequireRole(["Administrator", "Organizer", "Executive"]))):
     simulation_engine.pause()
     return {"message": "Simulation paused"}
 
 @router.post("/resume")
-async def resume_simulation(current_user: User = Depends(get_current_user)):
-    if current_user.role not in ["admin", "organizer", "operator"]:
-        raise HTTPException(status_code=403, detail="Not authorized to control simulation")
+async def resume_simulation(current_user: User = Depends(RequireRole(["Administrator", "Organizer", "Executive"]))):
     simulation_engine.start()
     return {"message": "Simulation resumed"}
 
 @router.post("/reset")
-async def reset_simulation(current_user: User = Depends(get_current_user)):
-    if current_user.role not in ["admin", "organizer", "operator"]:
-        raise HTTPException(status_code=403, detail="Not authorized to control simulation")
+async def reset_simulation(current_user: User = Depends(RequireRole(["Administrator", "Organizer", "Executive"]))):
     simulation_engine.reset()
     return {"message": "Simulation reset"}
 
 @router.post("/speed")
-async def set_speed(speed_update: SpeedUpdate, current_user: User = Depends(get_current_user)):
-    if current_user.role not in ["admin", "organizer", "operator"]:
-        raise HTTPException(status_code=403, detail="Not authorized to control simulation")
+async def set_speed(speed_update: SpeedUpdate, current_user: User = Depends(RequireRole(["Administrator", "Organizer", "Executive"]))):
     simulation_engine.set_speed(speed_update.speed)
     return {"message": f"Simulation speed set to {speed_update.speed}"}
 
 @router.post("/scenario")
-async def trigger_demo_scenario(scenario: DemoScenario, current_user: User = Depends(get_current_user)):
-    if current_user.role not in ["admin", "organizer", "operator"]:
-        raise HTTPException(status_code=403, detail="Not authorized to control simulation")
+async def trigger_demo_scenario(scenario: DemoScenario, current_user: User = Depends(RequireRole(["Administrator", "Organizer", "Executive"]))):
     
     # Initialize deterministic seed
     import random
@@ -102,9 +91,7 @@ async def get_scenarios(current_user: User = Depends(get_current_user)):
     return {"activeScenarios": simulation_engine.active_scenarios}
 
 @router.post("/scenarios/{scenario_id}/trigger")
-async def trigger_scenario(scenario_id: str, trigger_data: ScenarioTrigger, current_user: User = Depends(get_current_user)):
-    if current_user.role not in ["admin", "organizer", "operator"]:
-        raise HTTPException(status_code=403, detail="Not authorized to control simulation")
+async def trigger_scenario(scenario_id: str, trigger_data: ScenarioTrigger, current_user: User = Depends(RequireRole(["Administrator", "Organizer", "Executive"]))):
     simulation_engine.trigger_scenario(
         scenario_id,
         trigger_data.title,
@@ -116,18 +103,32 @@ async def trigger_scenario(scenario_id: str, trigger_data: ScenarioTrigger, curr
     return {"message": f"Scenario {scenario_id} triggered"}
 
 @router.post("/scenarios/{scenario_id}/resolve")
-async def resolve_scenario(scenario_id: str, current_user: User = Depends(get_current_user)):
-    if current_user.role not in ["admin", "organizer", "operator"]:
-        raise HTTPException(status_code=403, detail="Not authorized to control simulation")
+async def resolve_scenario(scenario_id: str, current_user: User = Depends(RequireRole(["Administrator", "Organizer", "Executive"]))):
     simulation_engine.resolve_scenario(scenario_id)
     return {"message": f"Scenario {scenario_id} resolved"}
 
 @router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    # Note: Authentication over WebSocket requires sending token in the first message or as query parameter.
-    # For MVP, we allow the connection and accept a "auth" message if needed, or assume they have access to the URL.
+async def websocket_endpoint(websocket: WebSocket, token: str = None, db = Depends(get_db)):
     client_id = str(uuid.uuid4())
-    await ws_manager.connect(websocket, client_id)
+    
+    role = "Fan" # default
+    if token:
+        try:
+            from jose import jwt
+            from app.core.config import settings
+            from app.schemas.auth import TokenPayload
+            from app.repositories.user_repository import UserRepository
+            
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+            token_data = TokenPayload(**payload)
+            user_repo = UserRepository(db)
+            user = await user_repo.get_by_id(uuid.UUID(token_data.sub))
+            if user:
+                role = user.role
+        except Exception as e:
+            pass
+            
+    await ws_manager.connect(websocket, client_id, role)
     
     # Send current state on connect
     await ws_manager.send_personal_message(simulation_engine.get_full_state(), websocket)

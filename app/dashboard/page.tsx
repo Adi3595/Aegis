@@ -11,8 +11,17 @@ export default function DashboardIndexPage() {
 
   React.useEffect(() => {
     if (user?.role) {
-      // Redirect to the correct role dashboard
-      const roleSlug = user.role.toLowerCase()
+      // Map roles to their specific dashboard slugs
+      const roleMap: Record<string, string> = {
+        "Fan": "fan",
+        "Volunteer": "volunteer",
+        "Organizer": "organizer",
+        "Security": "security",
+        "Medical": "medical",
+        "Executive": "executive",
+        "Administrator": "admin"
+      }
+      const roleSlug = roleMap[user.role] || "fan"
       router.replace(`/dashboard/${roleSlug}`)
     } else {
       router.replace("/onboarding")

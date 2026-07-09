@@ -8,20 +8,24 @@ from app.core.config import settings
 
 class ConnectionManager:
     def __init__(self):
-        self.active_connections: Dict[str, Set[WebSocket]] = {}
+        # Maps client_id to (websocket, role)
+        self.active_connections: Dict[str, set] = {}
         self.redis_channel = "simulation_events"
         self._pubsub_task = None
 
-    async def connect(self, websocket: WebSocket, client_id: str):
+    async def connect(self, websocket: WebSocket, client_id: str, role: str = "Fan"):
         await websocket.accept()
         if client_id not in self.active_connections:
             self.active_connections[client_id] = set()
-        self.active_connections[client_id].add(websocket)
-        logger.info(f"Client {client_id} connected. Total clients: {len(self.active_connections)}")
+        self.active_connections[client_id].add((websocket, role))
+        logger.info(f"Client {client_id} (Role: {role}) connected. Total clients: {len(self.active_connections)}")
 
     def disconnect(self, websocket: WebSocket, client_id: str):
         if client_id in self.active_connections:
-            self.active_connections[client_id].discard(websocket)
+            # Find and discard the tuple with this websocket
+            to_remove = [item for item in self.active_connections[client_id] if item[0] == websocket]
+            for item in to_remove:
+                self.active_connections[client_id].discard(item)
             if not self.active_connections[client_id]:
                 del self.active_connections[client_id]
         logger.info(f"Client {client_id} disconnected.")
@@ -35,8 +39,14 @@ class ConnectionManager:
     async def broadcast_local(self, message: dict):
         """Broadcast to all connected websockets on this specific server instance"""
         dead_connections = []
+        target_roles = message.get("targetRoles", None)
+        
         for client_id, connections in self.active_connections.items():
-            for connection in list(connections):
+            for connection, role in list(connections):
+                # Filter by role if targetRoles is present
+                if target_roles and role not in target_roles:
+                    continue
+                    
                 try:
                     await connection.send_json(message)
                 except Exception:

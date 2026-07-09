@@ -24,19 +24,80 @@ import { useLayoutStore } from "@/store/layoutStore"
 import { useAuthStore } from "@/features/auth/store/authStore"
 import { cn } from "@/lib/utils"
 
-const mainNavigation = [
-  { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Digital Twin", href: "/dashboard/twin", icon: Map },
-  { name: "Live Simulation", href: "/dashboard/simulation", icon: Activity },
-  { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
-]
-
-const secondaryNavigation = [
-  { name: "Reports", href: "/dashboard/reports", icon: FileText },
-  { name: "Messages", href: "/dashboard/messages", icon: MessageSquare, badge: 3 },
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
-  { name: "Support", href: "/dashboard/support", icon: LifeBuoy },
-]
+const getRoleNavigation = (role: string | undefined) => {
+  switch (role) {
+    case "Fan":
+      return {
+        main: [
+          { name: "Overview", href: "/dashboard/fan", icon: LayoutDashboard },
+          { name: "Live Match", href: "/dashboard/fan/live", icon: Activity },
+        ],
+        secondary: [
+          { name: "Settings", href: "/dashboard/settings", icon: Settings },
+          { name: "Support", href: "/dashboard/support", icon: LifeBuoy },
+        ]
+      }
+    case "Volunteer":
+      return {
+        main: [
+          { name: "Overview", href: "/dashboard/volunteer", icon: LayoutDashboard },
+        ],
+        secondary: [
+          { name: "Messages", href: "/dashboard/messages", icon: MessageSquare, badge: 1 },
+          { name: "Settings", href: "/dashboard/settings", icon: Settings },
+        ]
+      }
+    case "Organizer":
+    case "Administrator":
+      return {
+        main: [
+          { name: "Overview", href: `/dashboard/${role === 'Administrator' ? 'admin' : 'organizer'}`, icon: LayoutDashboard },
+          { name: "Digital Twin", href: "/dashboard/twin", icon: Map },
+          { name: "Live Simulation", href: "/dashboard/simulation", icon: Activity },
+          { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
+        ],
+        secondary: [
+          { name: "Reports", href: "/dashboard/reports", icon: FileText },
+          { name: "Messages", href: "/dashboard/messages", icon: MessageSquare, badge: 3 },
+          { name: "Settings", href: "/dashboard/settings", icon: Settings },
+          { name: "Support", href: "/dashboard/support", icon: LifeBuoy },
+        ]
+      }
+    case "Security":
+    case "Medical":
+      return {
+        main: [
+          { name: "Overview", href: `/dashboard/${role.toLowerCase()}`, icon: LayoutDashboard },
+          { name: "Digital Twin", href: "/dashboard/twin", icon: Map },
+          { name: "Live Simulation", href: "/dashboard/simulation", icon: Activity },
+        ],
+        secondary: [
+          { name: "Messages", href: "/dashboard/messages", icon: MessageSquare, badge: 5 },
+          { name: "Settings", href: "/dashboard/settings", icon: Settings },
+        ]
+      }
+    case "Executive":
+      return {
+        main: [
+          { name: "Overview", href: "/dashboard/executive", icon: LayoutDashboard },
+          { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
+        ],
+        secondary: [
+          { name: "Reports", href: "/dashboard/reports", icon: FileText },
+          { name: "Settings", href: "/dashboard/settings", icon: Settings },
+        ]
+      }
+    default:
+      return {
+        main: [
+          { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
+        ],
+        secondary: [
+          { name: "Settings", href: "/dashboard/settings", icon: Settings },
+        ]
+      }
+  }
+}
 
 export function Sidebar() {
   const pathname = usePathname()
@@ -45,6 +106,8 @@ export function Sidebar() {
 
   // Handle mobile behavior
   const isMobile = typeof window !== "undefined" ? window.innerWidth < 1024 : false
+
+  const { main: mainNavigation, secondary: secondaryNavigation } = getRoleNavigation(user?.role)
 
   return (
     <>

@@ -102,6 +102,13 @@ class SimulationService:
             return
         self.active_scenarios.append(scenario_id)
         
+        # Determine target roles based on category/severity
+        target_roles = ["Administrator", "Organizer", "Executive"]
+        if category in ["medical", "security", "crowd"]:
+            target_roles.extend(["Security", "Medical", "Volunteer"])
+        elif category == "operations":
+            target_roles.extend(["Security", "Medical", "Volunteer", "Fan"])
+
         event = {
             "id": f"evt_{int(datetime.now().timestamp())}_{random.randint(100, 999)}",
             "scenarioId": scenario_id,
@@ -111,11 +118,15 @@ class SimulationService:
             "severity": severity,
             "category": category,
             "affectedZones": affected_zones,
-            "status": "active"
+            "status": "active",
+            "targetRoles": target_roles
         }
         self.events.insert(0, event)
         asyncio.create_task(persistence_service.log_event("scenario.triggered", event))
-        asyncio.create_task(ws_manager.broadcast({"type": "scenario.triggered", "event": event, "scenarioId": scenario_id}))
+        
+        # Broadcast with targetRoles attached so WebSocket manager filters it
+        message = {"type": "scenario.triggered", "event": event, "scenarioId": scenario_id, "targetRoles": target_roles}
+        asyncio.create_task(ws_manager.broadcast(message))
         
     def resolve_scenario(self, scenario_id: str):
         if scenario_id in self.active_scenarios:
