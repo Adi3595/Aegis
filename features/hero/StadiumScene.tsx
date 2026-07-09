@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
-import { Environment, Sparkles, SpotLight, useDepthBuffer } from "@react-three/drei"
+import { Sparkles, SpotLight } from "@react-three/drei"
 import * as THREE from "three"
 
 function CameraRig() {
@@ -61,15 +61,12 @@ function StadiumGeometry() {
 }
 
 function Lights() {
-  const depthBuffer = useDepthBuffer({ frames: 1 })
-
   return (
     <>
       <ambientLight intensity={0.1} />
       
       {/* Main floodlights */}
       <SpotLight
-        depthBuffer={depthBuffer}
         color="#32D4FF"
         position={[15, 15, 15]}
         target={new THREE.Object3D()}
@@ -82,7 +79,6 @@ function Lights() {
         castShadow
       />
       <SpotLight
-        depthBuffer={depthBuffer}
         color="#7C5CFF"
         position={[-15, 15, -15]}
         target={new THREE.Object3D()}
@@ -97,7 +93,6 @@ function Lights() {
 
       {/* Animated Light Beams mapping the field */}
       <SpotLight
-        depthBuffer={depthBuffer}
         color="#00D26A"
         position={[0, 10, 0]}
         angle={0.2}
@@ -115,7 +110,7 @@ export default function StadiumScene() {
   return (
     <div className="absolute inset-0 z-0 h-full w-full bg-primary-bg overflow-hidden pointer-events-none hidden md:block">
       <Canvas 
-        shadows 
+        shadows={{ type: THREE.PCFShadowMap }}
         camera={{ position: [0, 5, 20], fov: 45 }}
         dpr={[1, 2]} // Optimize pixel ratio
         gl={{ antialias: false }} // Disable antialias for performance if using postprocessing or rely on dpr

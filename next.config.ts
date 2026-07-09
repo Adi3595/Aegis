@@ -33,7 +33,7 @@ const nextConfig: NextConfig = {
           {
             key: 'Content-Security-Policy',
             // Simple CSP for MVP. Note: In production you would lock this down further.
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' ws: wss: http://localhost:8000 ws://localhost:8000;",
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' ws: wss: http://localhost:8000 ws://localhost:8000 https://*.onrender.com wss://*.onrender.com;",
           }
         ],
       },
