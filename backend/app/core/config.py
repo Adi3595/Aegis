@@ -21,7 +21,7 @@ class Settings(BaseSettings):
             return []
         return [item.strip() for item in self.BACKEND_CORS_ORIGINS.split(",") if item.strip()]
 
-    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/aegis_ai"
+    DATABASE_URL: str = "postgresql+asyncpg://neondb_owner:***REMOVED***@ep-twilight-star-at1opox0-pooler.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require"
     
     @validator("DATABASE_URL", pre=True)
     def assemble_db_connection(cls, v: str | None) -> str:
@@ -32,7 +32,7 @@ class Settings(BaseSettings):
                 v = v.replace("postgresql://", "postgresql+asyncpg://", 1)
         return v
 
-    REDIS_URL: str = "redis://localhost:6379/0"
+    REDIS_URL: str = "redis://localhost:6379"
 
     # Groq
     GROQ_API_KEY: str = ""
