@@ -25,6 +25,7 @@ class UserRepository:
             email=user_in.email,
             name=user_in.name,
             hashed_password=get_password_hash(user_in.password),
+            role=user_in.role,
         )
         self.session.add(db_user)
         await self.session.commit()

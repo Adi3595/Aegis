@@ -9,6 +9,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str = Field(min_length=8, description="Must contain uppercase, lowercase, numbers, and special characters")
+    role: str = "Fan"
 
 class UserUpdate(BaseModel):
     name: Optional[str] = None

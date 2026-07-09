@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { User as UserIcon, Mail, Lock, ArrowRight, Loader2 } from "lucide-react"
+import { User as UserIcon, Mail, Lock, ArrowRight, Loader2, Shield } from "lucide-react"
 
 import { registerSchema, RegisterFormData } from "@/features/auth/schemas/authSchemas"
 import { authService } from "@/features/auth/services/authService"
@@ -90,6 +90,31 @@ export default function RegisterPage() {
             </div>
             {errors.email && (
               <p className="text-xs text-error mt-1">{errors.email.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="role">Clearance Level (Role)</Label>
+            <div className="relative">
+              <Shield className="absolute left-3 top-3 h-5 w-5 text-muted-text/50 pointer-events-none" />
+              <select
+                id="role"
+                className="flex h-11 w-full rounded-xl border border-white/10 bg-white/5 pl-10 pr-3 py-2 text-sm text-white ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-text/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-accent focus-visible:border-transparent disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200"
+                {...register("role")}
+                disabled={isLoading}
+              >
+                <option value="Fan" className="bg-primary-bg text-white">Fan</option>
+                <option value="Organizer" className="bg-primary-bg text-white">Organizer</option>
+                <option value="Volunteer" className="bg-primary-bg text-white">Volunteer</option>
+                <option value="Security" className="bg-primary-bg text-white">Security</option>
+                <option value="Medical" className="bg-primary-bg text-white">Medical</option>
+                <option value="Vendor" className="bg-primary-bg text-white">Vendor</option>
+                <option value="Executive" className="bg-primary-bg text-white">Executive</option>
+                <option value="Administrator" className="bg-primary-bg text-white">Administrator</option>
+              </select>
+            </div>
+            {errors.role && (
+              <p className="text-xs text-error mt-1">{errors.role.message}</p>
             )}
           </div>
 
