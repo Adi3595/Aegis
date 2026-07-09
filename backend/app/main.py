@@ -18,13 +18,20 @@ from app.services.websocket_manager import manager as ws_manager
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Run database migrations programmatically to prevent OOM in free tier
+    # Run in a separate thread to avoid asyncio.run() RuntimeError from env.py
+    import asyncio
     try:
-        from alembic.config import Config
-        from alembic import command
-        alembic_cfg = Config("alembic.ini")
-        command.upgrade(alembic_cfg, "head")
+        def run_migrations():
+            from alembic.config import Config
+            from alembic import command
+            alembic_cfg = Config("alembic.ini")
+            command.upgrade(alembic_cfg, "head")
+            
+        await asyncio.to_thread(run_migrations)
     except Exception as e:
+        import traceback
         print(f"Migration failed: {e}")
+        traceback.print_exc()
         
     # Startup
     await init_redis()
