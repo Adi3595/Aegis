@@ -5,6 +5,7 @@ import { useNotificationStore } from "@/features/notifications/store/notificatio
 class WebSocketService {
   private ws: WebSocket | null = null
   private reconnectTimer: NodeJS.Timeout | null = null
+  private pingTimer: NodeJS.Timeout | null = null
   private readonly RECONNECT_DELAY_MS = 3000
   private isConnecting = false
 
@@ -12,7 +13,7 @@ class WebSocketService {
     if (this.ws?.readyState === WebSocket.OPEN || this.isConnecting) return
 
     this.isConnecting = true
-    const wsUrl = process.env.NEXT_PUBLIC_API_URL?.replace("http", "ws") || "ws://localhost:8000/api/v1"
+    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || process.env.NEXT_PUBLIC_API_URL?.replace("http", "ws") || "ws://localhost:8000/api/v1"
     
     try {
       this.ws = new WebSocket(`${wsUrl}/simulation/ws`)
@@ -24,6 +25,13 @@ class WebSocketService {
           clearTimeout(this.reconnectTimer)
           this.reconnectTimer = null
         }
+        
+        // Setup ping interval to keep connection alive (Render drops after 100s)
+        this.pingTimer = setInterval(() => {
+          if (this.ws?.readyState === WebSocket.OPEN) {
+            this.ws.send(JSON.stringify({ type: "ping" }))
+          }
+        }, 30000)
       }
 
       this.ws.onmessage = (event) => {
@@ -39,6 +47,10 @@ class WebSocketService {
         console.log("Simulation WebSocket disconnected")
         this.isConnecting = false
         this.ws = null
+        if (this.pingTimer) {
+          clearInterval(this.pingTimer)
+          this.pingTimer = null
+        }
         this.scheduleReconnect()
       }
 
@@ -57,6 +69,10 @@ class WebSocketService {
     if (this.reconnectTimer) {
       clearTimeout(this.reconnectTimer)
       this.reconnectTimer = null
+    }
+    if (this.pingTimer) {
+      clearInterval(this.pingTimer)
+      this.pingTimer = null
     }
     if (this.ws) {
       this.ws.close()

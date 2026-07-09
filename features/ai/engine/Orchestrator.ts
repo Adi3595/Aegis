@@ -31,7 +31,7 @@ export class AIOrchestrator {
     try {
       const context = ContextEngine.buildContext()
       
-      const wsUrl = (process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8000/api/v1") + "/ai/ws"
+      const wsUrl = (process.env.NEXT_PUBLIC_WS_URL || process.env.NEXT_PUBLIC_API_URL?.replace("http", "ws") || "ws://localhost:8000/api/v1") + "/ai/ws"
       const ws = new WebSocket(wsUrl)
       
       // Temporary message ID
