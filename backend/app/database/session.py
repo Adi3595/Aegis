@@ -6,6 +6,10 @@ from app.core.config import settings
 db_url = settings.DATABASE_URL
 if "sslmode=" in db_url:
     db_url = db_url.replace("sslmode=", "ssl=")
+if "&channel_binding=require" in db_url:
+    db_url = db_url.replace("&channel_binding=require", "")
+if "?channel_binding=require&" in db_url:
+    db_url = db_url.replace("?channel_binding=require&", "?")
 
 engine = create_async_engine(
     db_url,
