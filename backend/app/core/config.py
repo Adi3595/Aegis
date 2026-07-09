@@ -30,6 +30,9 @@ class Settings(BaseSettings):
                 v = v.replace("postgres://", "postgresql://", 1)
             if v.startswith("postgresql://"):
                 v = v.replace("postgresql://", "postgresql+asyncpg://", 1)
+            # asyncpg uses ssl=require instead of sslmode=require
+            if "sslmode=" in v:
+                v = v.replace("sslmode=", "ssl=")
         return v
 
     REDIS_URL: str = "redis://localhost:6379"
