@@ -134,8 +134,6 @@ export default function StadiumScene() {
             opacity={0.2} 
             color="#32D4FF" 
           />
-          
-          <Environment preset="city" />
         </React.Suspense>
         
         <CameraRig />
