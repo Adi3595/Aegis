@@ -21,7 +21,7 @@ class Settings(BaseSettings):
             return []
         return [item.strip() for item in self.BACKEND_CORS_ORIGINS.split(",") if item.strip()]
 
-    DATABASE_URL: str = "postgresql+asyncpg://neondb_owner:***REMOVED***@ep-twilight-star-at1opox0-pooler.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require"
+    DATABASE_URL: str = "sqlite+aiosqlite:///./test.db"
     
     @validator("DATABASE_URL", pre=True)
     def assemble_db_connection(cls, v: str | None) -> str:
