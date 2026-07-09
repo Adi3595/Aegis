@@ -17,9 +17,15 @@ from app.services.websocket_manager import manager as ws_manager
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Run database migrations automatically on startup
-    os.system("alembic upgrade head")
-    
+    # Run database migrations programmatically to prevent OOM in free tier
+    try:
+        from alembic.config import Config
+        from alembic import command
+        alembic_cfg = Config("alembic.ini")
+        command.upgrade(alembic_cfg, "head")
+    except Exception as e:
+        print(f"Migration failed: {e}")
+        
     # Startup
     await init_redis()
     persistence_service.start()
