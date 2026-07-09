@@ -9,6 +9,8 @@ import { VolunteerTasks } from "@/features/volunteer/components/VolunteerTasks"
 import { VolunteerMap } from "@/features/volunteer/components/VolunteerMap"
 import { IncidentReporter } from "@/features/volunteer/components/IncidentReporter"
 import { VolunteerCopilot } from "@/features/volunteer/components/VolunteerCopilot"
+import { ShiftTrackingUI } from "@/features/volunteer/components/ShiftTrackingUI"
+import { SmartRoutingMap } from "@/features/volunteer/components/SmartRoutingMap"
 import { CheckCircle, Map, AlertTriangle, MessageSquare } from "lucide-react"
 
 export default function VolunteerDashboardPage() {
@@ -64,14 +66,33 @@ export default function VolunteerDashboardPage() {
 
       {/* Main Content Area */}
       <div className="flex-1 overflow-y-auto hide-scrollbar pb-6 relative z-10">
-        <div className={activeTab === "tasks" ? "block h-full" : "hidden"}>
-          <VolunteerTasks />
-        </div>
-        <div className={activeTab === "map" ? "block h-full" : "hidden"}>
-          <VolunteerMap />
-        </div>
-        <div className={activeTab === "report" ? "block h-full" : "hidden"}>
-          <IncidentReporter />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
+          
+          {/* Left Column: Shift & Tasks */}
+          <div className={`lg:col-span-4 flex-col gap-6 ${activeTab === "tasks" ? "flex h-full" : "hidden lg:flex"}`}>
+            <div className="shrink-0">
+              <ShiftTrackingUI />
+            </div>
+            <div className="flex-1 min-h-[400px]">
+              <VolunteerTasks />
+            </div>
+          </div>
+
+          {/* Center Column: Map & Routing */}
+          <div className={`lg:col-span-5 flex-col gap-6 ${activeTab === "map" ? "flex h-full" : "hidden lg:flex"}`}>
+            <div className="flex-1 min-h-[400px]">
+              <VolunteerMap />
+            </div>
+            <div className="shrink-0 h-[250px]">
+              <SmartRoutingMap />
+            </div>
+          </div>
+
+          {/* Right Column: Incident Report */}
+          <div className={`lg:col-span-3 flex-col gap-6 ${activeTab === "report" ? "flex h-full" : "hidden lg:flex"}`}>
+            <IncidentReporter />
+          </div>
+
         </div>
       </div>
 

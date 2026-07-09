@@ -7,13 +7,13 @@ import { CriticalAlertBanner } from "@/features/responder/components/CriticalAle
 import { IncidentQueue } from "@/features/responder/components/IncidentQueue"
 import { ResponderCopilotWidget } from "@/features/responder/components/ResponderCopilotWidget"
 import { ResponderMap } from "@/features/responder/components/ResponderMap"
-import { EmergencyPlaybooks } from "@/features/responder/components/EmergencyPlaybooks"
-import { ResponseTeamManager } from "@/features/responder/components/ResponseTeamManager"
 import { PredictiveRiskAnalysis } from "@/features/responder/components/PredictiveRiskAnalysis"
 import { ResponderTimeline } from "@/features/responder/components/ResponderTimeline"
 import { ResponderCommunications } from "@/features/responder/components/ResponderCommunications"
+import { PlaybooksUI } from "@/features/security/components/PlaybooksUI"
+import { TeamDeploymentTracker } from "@/features/security/components/TeamDeploymentTracker"
 
-export default function ResponderDashboardPage() {
+export default function SecurityDashboardPage() {
   const router = useRouter()
   const { user, isAuthenticated, isLoading } = useAuthStore()
 
@@ -42,7 +42,7 @@ export default function ResponderDashboardPage() {
           {/* Left Column: Triage & Teams (3 cols) */}
           <div className="xl:col-span-3 flex flex-col gap-6">
             <IncidentQueue />
-            <ResponseTeamManager />
+            <TeamDeploymentTracker />
           </div>
 
           {/* Center Column: Mission Control / Digital Twin / Copilot (6 cols) */}
@@ -53,7 +53,7 @@ export default function ResponderDashboardPage() {
               <ResponderMap />
             </div>
 
-            <EmergencyPlaybooks />
+            <PlaybooksUI />
           </div>
 
           {/* Right Column: Insights & Comms (3 cols) */}

@@ -10,6 +10,8 @@ from app.models.token import RefreshToken
 from sqlalchemy import select, delete
 from datetime import datetime, timezone
 
+from app.database.redis import get_redis
+
 class AuthService:
     def __init__(self, session: AsyncSession):
         self.session = session
@@ -26,13 +28,38 @@ class AuthService:
         return await self.user_repo.create(user_in)
 
     async def login(self, login_data: Login) -> Token:
+        redis = await get_redis()
+        lockout_key = f"lockout:{login_data.email}"
+        attempts_key = f"login_attempts:{login_data.email}"
+        
+        if redis:
+            is_locked = await redis.get(lockout_key)
+            if is_locked:
+                raise APIException(
+                    status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                    code="account_locked",
+                    message="Account locked due to too many failed login attempts. Try again in 15 minutes."
+                )
+
         user = await self.user_repo.get_by_email(login_data.email)
         if not user or not verify_password(login_data.password, user.hashed_password):
+            if redis:
+                attempts = await redis.incr(attempts_key)
+                if attempts == 1:
+                    await redis.expire(attempts_key, 300) # 5 minutes window
+                if attempts >= 5: # Lockout after 5 attempts
+                    await redis.setex(lockout_key, 900, "locked") # 15 minutes lockout
+                    await redis.delete(attempts_key)
+                    
             raise APIException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 code="invalid_credentials",
                 message="Invalid email or password."
             )
+            
+        if redis:
+            await redis.delete(attempts_key)
+            await redis.delete(lockout_key)
         
         if not user.is_active:
             raise APIException(

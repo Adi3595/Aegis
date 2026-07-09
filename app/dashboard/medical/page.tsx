@@ -4,16 +4,15 @@ import * as React from "react"
 import { useRouter } from "next/navigation"
 import { useAuthStore } from "@/features/auth/store/authStore"
 import { CriticalAlertBanner } from "@/features/responder/components/CriticalAlertBanner"
-import { IncidentQueue } from "@/features/responder/components/IncidentQueue"
-import { ResponderCopilotWidget } from "@/features/responder/components/ResponderCopilotWidget"
 import { ResponderMap } from "@/features/responder/components/ResponderMap"
 import { EmergencyPlaybooks } from "@/features/responder/components/EmergencyPlaybooks"
 import { ResponseTeamManager } from "@/features/responder/components/ResponseTeamManager"
-import { PredictiveRiskAnalysis } from "@/features/responder/components/PredictiveRiskAnalysis"
 import { ResponderTimeline } from "@/features/responder/components/ResponderTimeline"
 import { ResponderCommunications } from "@/features/responder/components/ResponderCommunications"
+import { PatientQueueUI } from "@/features/medical/components/PatientQueueUI"
+import { EquipmentStatusTracker } from "@/features/medical/components/EquipmentStatusTracker"
 
-export default function ResponderDashboardPage() {
+export default function MedicalDashboardPage() {
   const router = useRouter()
   const { user, isAuthenticated, isLoading } = useAuthStore()
 
@@ -41,7 +40,7 @@ export default function ResponderDashboardPage() {
           
           {/* Left Column: Triage & Teams (3 cols) */}
           <div className="xl:col-span-3 flex flex-col gap-6">
-            <IncidentQueue />
+            <PatientQueueUI />
             <ResponseTeamManager />
           </div>
 
@@ -58,7 +57,7 @@ export default function ResponderDashboardPage() {
 
           {/* Right Column: Insights & Comms (3 cols) */}
           <div className="xl:col-span-3 flex flex-col gap-6">
-            <PredictiveRiskAnalysis />
+            <EquipmentStatusTracker />
             <ResponderCommunications />
             <ResponderTimeline />
           </div>
