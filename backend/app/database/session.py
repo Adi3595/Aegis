@@ -3,8 +3,12 @@ from app.core.config import settings
 
 # For SQLite fallback during early dev, we could use sqlite+aiosqlite
 # But we are setting up Postgres as requested
+db_url = settings.DATABASE_URL
+if "sslmode=" in db_url:
+    db_url = db_url.replace("sslmode=", "ssl=")
+
 engine = create_async_engine(
-    settings.DATABASE_URL,
+    db_url,
     echo=settings.DEBUG,
     future=True,
     pool_size=5,

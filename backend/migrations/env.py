@@ -24,7 +24,11 @@ from app.core.config import settings
 # for 'autogenerate' support
 target_metadata = Base.metadata
 
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
+db_url = settings.DATABASE_URL
+if "sslmode=" in db_url:
+    db_url = db_url.replace("sslmode=", "ssl=")
+
+config.set_main_option("sqlalchemy.url", db_url)
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
