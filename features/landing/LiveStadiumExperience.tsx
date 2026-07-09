@@ -7,6 +7,7 @@ import { GlassPanel } from "@/components/ui/glass-panel"
 import { Slide, Fade } from "@/animations"
 import { Users, DoorOpen, Clock, Car, Cloud, Stethoscope, HeartHandshake } from "lucide-react"
 import { motion } from "framer-motion"
+import { StadiumMap } from "@/features/digital-twin/components/StadiumMap"
 
 const LIVE_DATA = [
   { title: "Crowd Density", value: 82, suffix: "%", trend: -2, icon: <Users className="h-5 w-5" /> },
@@ -105,18 +106,18 @@ export default function LiveStadiumExperience() {
 
             {/* Radar Sweep Effect */}
             <motion.div 
-              className="absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary-accent/20 bg-gradient-to-tr from-transparent via-primary-accent/10 to-transparent"
+              className="absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary-accent/20 bg-gradient-to-tr from-transparent via-primary-accent/10 to-transparent pointer-events-none z-10"
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
               style={{ originX: 0.5, originY: 0.5 }}
             />
             
-            <div className="relative z-10 flex flex-col items-center justify-center text-center">
-              <div className="mb-4 h-16 w-16 rounded-full border-2 border-primary-accent/50 border-t-primary-accent animate-spin" />
-              <h3 className="font-display text-xl font-bold text-white">Live Digital Twin</h3>
-              <p className="mt-2 text-sm text-muted-text max-w-[250px]">
-                3D Interactive Visualization connecting to rendering engine...
-              </p>
+            <div className="relative z-20 flex w-full h-full items-center justify-center pointer-events-none scale-75 lg:scale-90">
+              <StadiumMap />
+            </div>
+            
+            <div className="absolute bottom-6 z-30 flex flex-col items-center justify-center text-center bg-black/40 backdrop-blur-md px-6 py-2 rounded-xl border border-white/10">
+              <h3 className="font-display text-sm font-bold text-white uppercase tracking-wider">Live Digital Twin</h3>
             </div>
           </GlassPanel>
         </Slide>

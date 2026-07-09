@@ -6,6 +6,7 @@ import { SectionHeading } from "@/components/ui/section-heading"
 import { GlassPanel } from "@/components/ui/glass-panel"
 import { Badge } from "@/components/ui/badge"
 import { Slide } from "@/animations"
+import { StadiumMap } from "@/features/digital-twin/components/StadiumMap"
 
 const OVERLAYS = [
   "Crowd", "Medical", "Security", "Transport", 
@@ -56,8 +57,12 @@ export default function DigitalTwinPreview() {
             {/* Background Grid */}
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxwYXRoIGQ9Ik0wIDBoMjB2MjBIMHoiIGZpbGw9Im5vbmUiLz4KPHBhdGggZD0iTTAgMGgyMHYxSDB6TTAgMHYyMGgxVjB6IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] bg-[size:40px_40px]" />
             
+            <div className="absolute inset-0 flex w-full h-full items-center justify-center opacity-60 pointer-events-none">
+              <StadiumMap />
+            </div>
+
             {/* Simulated UI Content */}
-            <div className="absolute inset-0 flex items-center justify-center p-8">
+            <div className="absolute inset-0 flex items-center justify-center p-8 z-20">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeOverlay}
