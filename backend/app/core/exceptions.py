@@ -16,6 +16,12 @@ class APIException(Exception):
         self.details = details or {}
 
 async def api_exception_handler(request: Request, exc: APIException) -> JSONResponse:
+    origin = request.headers.get("origin")
+    headers = {}
+    if origin:
+        headers["Access-Control-Allow-Origin"] = origin
+        headers["Access-Control-Allow-Credentials"] = "true"
+
     return JSONResponse(
         status_code=exc.status_code,
         content={
@@ -25,11 +31,19 @@ async def api_exception_handler(request: Request, exc: APIException) -> JSONResp
                 "message": exc.message,
                 "details": exc.details
             }
-        }
+        },
+        headers=headers
     )
 
 async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    import traceback
     # In a real app, log the exception stack trace here
+    origin = request.headers.get("origin")
+    headers = {}
+    if origin:
+        headers["Access-Control-Allow-Origin"] = origin
+        headers["Access-Control-Allow-Credentials"] = "true"
+        
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={
@@ -37,7 +51,12 @@ async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONR
             "error": {
                 "code": "unhandled_exception",
                 "message": "A critical system error occurred.",
-                "details": {"type": str(type(exc).__name__)}
+                "details": {
+                    "type": str(type(exc).__name__),
+                    "msg": str(exc),
+                    "traceback": traceback.format_exc()
+                }
             }
-        }
+        },
+        headers=headers
     )
