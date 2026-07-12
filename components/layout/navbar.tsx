@@ -7,6 +7,7 @@ import { Shield, Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { Logo } from "@/components/ui/logo"
 
 export function Navbar() {
   const { scrollY } = useScroll()
@@ -84,11 +85,9 @@ export function Navbar() {
       >
         <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-8">
           <div className="flex items-center space-x-3 cursor-pointer" onClick={(e) => handleSmoothScroll(e as any, 'body')}>
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-accent to-ai-accent text-primary-bg shadow-lg">
-              <Shield className="h-5 w-5" />
-            </div>
+            <Logo className="h-10 w-auto" />
             <span className="font-display text-2xl font-bold tracking-tight text-white">
-              AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-accent to-ai-accent">AI</span>
+              AEGIS
             </span>
           </div>
           

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { LanguageSwitcher } from "@/features/i18n/components/LanguageSwitcher"
 import { OfflineIndicator } from "@/features/fan/components/OfflineIndicator"
 import { useAuthStore } from "@/features/auth/store/authStore"
+import { Logo } from "@/components/ui/logo"
 
 export function TopNav() {
   const { toggleSidebar, toggleNotificationCenter, toggleCommandPalette, notificationCenterOpen } = useLayoutStore()
@@ -26,9 +27,7 @@ export function TopNav() {
         </button>
         
         <Link href="/dashboard" className="flex items-center gap-2 group hidden sm:flex">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-accent to-ai-accent text-primary-bg shadow-lg group-hover:scale-105 transition-transform">
-            <Shield className="h-4 w-4" />
-          </div>
+          <Logo className="h-7 w-auto group-hover:scale-105 transition-transform" />
           <span className="font-display text-lg font-bold tracking-tight text-white hidden md:block">
             AEGIS
           </span>

@@ -3,6 +3,7 @@
 import * as React from "react"
 import { usePathname } from "next/navigation"
 import { Shield, Code, Globe, Briefcase } from "lucide-react"
+import { Logo } from "@/components/ui/logo"
 
 export function Footer() {
   const pathname = usePathname()
@@ -18,12 +19,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           
           <div className="lg:col-span-2 flex flex-col items-start">
-            <div className="flex items-center space-x-2 mb-6">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-accent text-primary-bg">
-                <Shield className="h-5 w-5" />
-              </div>
+            <div className="flex items-center space-x-3 mb-6">
+              <Logo className="h-8 w-auto" />
               <span className="font-display text-xl font-bold tracking-tight text-white">
-                AEGIS <span className="text-primary-accent">AI</span>
+                AEGIS
               </span>
             </div>
             <p className="text-sm text-muted-text max-w-sm mb-6">
@@ -62,7 +61,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-muted-text">
-          <p>© 2026 AEGIS AI Stadium Intelligence. All rights reserved.</p>
+          <p>© 2026 AEGIS Stadium Intelligence. All rights reserved.</p>
           <div className="flex items-center space-x-2 mt-4 md:mt-0">
             <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
             <span className="font-mono">ALL SYSTEMS NOMINAL</span>
