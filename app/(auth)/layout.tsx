@@ -16,7 +16,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               <Shield className="h-5 w-5" />
             </div>
             <span className="font-display text-xl font-bold tracking-tighter text-white">
-              AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-accent to-ai-accent">AI</span>
+              AEGIS
             </span>
           </Link>
           <div className="text-xs font-mono text-muted-text flex items-center space-x-2">

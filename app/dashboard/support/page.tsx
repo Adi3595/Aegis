@@ -69,7 +69,7 @@ export default function SupportPage() {
         <div className="space-y-4">
           {[
             { q: "How do I add a new Responder to my organization?", a: "Navigate to the Settings > Account page and click 'Invite Member'. They will receive an email with onboarding instructions." },
-            { q: "What happens if a sensor goes offline?", a: "AEGIS AI automatically re-routes intelligence gathering to neighboring sensors and alerts the Operations team." },
+            { q: "What happens if a sensor goes offline?", a: "AEGIS automatically re-routes intelligence gathering to neighboring sensors and alerts the Operations team." },
             { q: "Can I export simulation data?", a: "Yes. Go to the Reports module and click 'Export All' to download a CSV of telemetry logs." },
           ].map((faq, i) => (
             <Card key={i} className="p-0 overflow-hidden">

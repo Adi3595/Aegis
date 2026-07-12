@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://img.shields.io/badge/AEGIS-Operational_Intelligence-0A0A0F?style=for-the-badge&logo=shield&logoColor=5B8CFF" alt="AEGIS Logo" />
-  <h1 align="center">AEGIS AI: Operational Intelligence Platform</h1>
+  <h1 align="center">AEGIS : Operational Intelligence Platform</h1>
   <p align="center">
     <strong>Mission-critical stadium management powered by Digital Twins and Multi-Agent AI.</strong>
   </p>

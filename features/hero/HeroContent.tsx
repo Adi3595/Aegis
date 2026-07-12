@@ -76,7 +76,7 @@ export function HeroContent() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.4 }}
         >
-          AEGIS <span className="bg-gradient-to-r from-primary-accent to-ai-accent bg-clip-text text-transparent drop-shadow-sm">AI</span>
+          AEGIS
         </motion.h1>
 
         <motion.h2 
