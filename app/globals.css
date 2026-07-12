@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-bg: #040814;
-  --color-secondary-bg: #0C1224;
-  --color-surface: #0C1224;
-  --color-glass: rgba(18, 28, 52, 0.55);
-  --color-primary-accent: #5B8CFF;
-  --color-secondary-accent: #22D3EE;
-  --color-ai-accent: #9B8CFF;
+  --color-primary-bg: #0A0A0A;
+  --color-secondary-bg: #121212;
+  --color-surface: #171717;
+  --color-glass: rgba(30, 30, 30, 0.65);
+  --color-primary-accent: #10B981;
+  --color-secondary-accent: #F59E0B;
+  --color-ai-accent: #34D399;
   --color-success: #22C55E;
   --color-warning: #FBBF24;
   --color-error: #F43F5E;
@@ -37,10 +37,10 @@
 
 @layer utilities {
   .bg-mesh {
-    background: radial-gradient(at 0% 0%, rgba(124, 92, 255, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(50, 212, 255, 0.1) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(124, 92, 255, 0.15) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, rgba(50, 212, 255, 0.1) 0px, transparent 50%);
+    background: radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(245, 158, 11, 0.05) 0px, transparent 50%);
     background-size: 200% 200%;
     animation: mesh 15s ease infinite;
   }
@@ -55,16 +55,16 @@
 
 @layer base {
   :root {
-    --background: #040814;
+    --background: #0A0A0A;
     --foreground: #F8FAFC;
   }
 
   .panel-glass {
-    @apply relative overflow-hidden rounded-2xl border border-white/10 bg-[#0C1224]/60 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_8px_32px_rgba(0,0,0,0.4)];
+    @apply relative overflow-hidden rounded-2xl border border-white/10 bg-[#121212]/60 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_8px_32px_rgba(0,0,0,0.4)];
   }
 
   .panel-glass-interactive {
-    @apply relative overflow-hidden rounded-2xl border border-white/10 bg-[#0C1224]/60 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#0C1224]/80 hover:brightness-110 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_12px_40px_rgba(50,212,255,0.15)];
+    @apply relative overflow-hidden rounded-2xl border border-white/10 bg-[#121212]/60 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#171717]/80 hover:brightness-110 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_12px_40px_rgba(16,185,129,0.15)];
   }
 
   .panel-solid {
@@ -100,7 +100,7 @@
   }
 
   ::selection {
-    background-color: rgba(124, 92, 255, 0.3); /* AI Accent with opacity */
+    background-color: rgba(16, 185, 129, 0.3); /* Green Accent with opacity */
     color: #F8FAFC;
   }
 }
