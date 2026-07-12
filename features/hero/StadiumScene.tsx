@@ -69,34 +69,32 @@ function StadiumGeometry() {
 }
 
 function Lights() {
-  const light1 = React.useRef<any>(null)
-  const light2 = React.useRef<any>(null)
-  const light3 = React.useRef<any>(null)
+  const [l1, setL1] = React.useState(0)
+  const [l2, setL2] = React.useState(0)
+  const [l3, setL3] = React.useState(0)
 
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime()
-    
+  React.useEffect(() => {
     // Light 1: flickers on around 0.5s
-    if (light1.current) {
-      if (t > 0.5 && t < 1.0) light1.current.intensity = Math.random() > 0.5 ? 2 : 0
-      else if (t >= 1.0) light1.current.intensity = 2
-      else light1.current.intensity = 0
-    }
-    
+    setTimeout(() => setL1(2), 500)
+    setTimeout(() => setL1(0), 600)
+    setTimeout(() => setL1(2), 700)
+    setTimeout(() => setL1(0), 800)
+    setTimeout(() => setL1(2), 1000)
+
     // Light 2: flickers on around 1.5s
-    if (light2.current) {
-      if (t > 1.5 && t < 2.0) light2.current.intensity = Math.random() > 0.5 ? 2 : 0
-      else if (t >= 2.0) light2.current.intensity = 2
-      else light2.current.intensity = 0
-    }
+    setTimeout(() => setL2(2), 1500)
+    setTimeout(() => setL2(0), 1600)
+    setTimeout(() => setL2(2), 1700)
+    setTimeout(() => setL2(0), 1800)
+    setTimeout(() => setL2(2), 2000)
 
     // Light 3: flickers on around 2.5s
-    if (light3.current) {
-      if (t > 2.5 && t < 3.0) light3.current.intensity = Math.random() > 0.5 ? 1.5 : 0
-      else if (t >= 3.0) light3.current.intensity = 1.5
-      else light3.current.intensity = 0
-    }
-  })
+    setTimeout(() => setL3(1.5), 2500)
+    setTimeout(() => setL3(0), 2600)
+    setTimeout(() => setL3(1.5), 2700)
+    setTimeout(() => setL3(0), 2800)
+    setTimeout(() => setL3(1.5), 3000)
+  }, [])
 
   return (
     <>
@@ -104,7 +102,6 @@ function Lights() {
       
       {/* Main floodlights */}
       <SpotLight
-        ref={light1}
         color="#32D4FF"
         position={[15, 15, 15]}
         target={new THREE.Object3D()}
@@ -112,12 +109,11 @@ function Lights() {
         penumbra={0.5}
         attenuation={40}
         anglePower={5}
-        intensity={0}
-        opacity={0.3}
+        intensity={l1}
+        opacity={l1 > 0 ? 0.3 : 0}
         castShadow
       />
       <SpotLight
-        ref={light2}
         color="#7C5CFF"
         position={[-15, 15, -15]}
         target={new THREE.Object3D()}
@@ -125,21 +121,20 @@ function Lights() {
         penumbra={0.5}
         attenuation={40}
         anglePower={5}
-        intensity={0}
-        opacity={0.3}
+        intensity={l2}
+        opacity={l2 > 0 ? 0.3 : 0}
         castShadow
       />
 
       {/* Animated Light Beams mapping the field */}
       <SpotLight
-        ref={light3}
         color="#00D26A"
         position={[0, 10, 0]}
         angle={0.2}
         penumbra={1}
         attenuation={20}
-        intensity={0}
-        opacity={0.2}
+        intensity={l3}
+        opacity={l3 > 0 ? 0.2 : 0}
         castShadow
       />
     </>
