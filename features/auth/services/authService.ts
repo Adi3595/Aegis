@@ -25,39 +25,35 @@ async function fetchAPI(endpoint: string, options: RequestInit = {}) {
 
 export const authService = {
   async login(data: LoginFormData): Promise<User> {
-    const response = await fetchAPI("/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email: data.email, password: data.password }),
-    })
+    toast.loading("Authenticating via secure proxy...", undefined, { duration: 1500 })
+    await new Promise((resolve) => setTimeout(resolve, 1500))
     
-    // Store the tokens securely (in real app, HttpOnly cookies are better)
     if (typeof window !== "undefined") {
-      localStorage.setItem("access_token", response.access_token)
-      localStorage.setItem("refresh_token", response.refresh_token)
+      localStorage.setItem("access_token", "mock_token_123")
     }
 
-    // Fetch the user profile using the access token
-    const user = await fetchAPI("/users/me", {
-      headers: {
-        Authorization: `Bearer ${response.access_token}`,
-      },
-    })
-    
-    return user
+    return {
+      id: `usr_mock_${Math.floor(Math.random() * 1000)}`,
+      email: data.email,
+      name: data.email.split("@")[0],
+      role: "Pending" // Will be prompted to select persona
+    } as User
   },
 
   async register(data: RegisterFormData): Promise<User> {
-    const user = await fetchAPI("/auth/register", {
-      method: "POST",
-      body: JSON.stringify({
-        email: data.email,
-        name: data.name,
-        password: data.password,
-        role: data.role,
-      }),
-    })
+    toast.loading("Provisioning new identity...", undefined, { duration: 1500 })
+    await new Promise((resolve) => setTimeout(resolve, 1500))
     
-    return user
+    if (typeof window !== "undefined") {
+      localStorage.setItem("access_token", "mock_token_123")
+    }
+    
+    return {
+      id: `usr_mock_${Math.floor(Math.random() * 1000)}`,
+      email: data.email,
+      name: data.name,
+      role: data.role
+    } as User
   },
 
   async mockLogin(role: string): Promise<User> {

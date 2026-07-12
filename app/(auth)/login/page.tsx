@@ -1,40 +1,55 @@
 "use client"
 
 import * as React from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { motion } from "framer-motion"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Loader2, Mail, Lock, LogIn } from "lucide-react"
+import { Shield, Mail, Lock, ArrowRight, Loader2 } from "lucide-react"
 
+import { loginSchema, LoginFormData } from "@/features/auth/schemas/authSchemas"
 import { authService } from "@/features/auth/services/authService"
 import { useAuthStore } from "@/features/auth/store/authStore"
 import { toast } from "@/store/toastStore"
 import { PublicRoute } from "@/components/auth/PublicRoute"
-import { Card } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 
 export default function LoginPage() {
   const router = useRouter()
   const { setAuth, setLoading, isLoading } = useAuthStore()
-  
-  const [email, setEmail] = React.useState("")
-  const [password, setPassword] = React.useState("")
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email || !password) {
-      toast.error("Validation Error", "Please enter both email and password.")
-      return
-    }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  })
 
+  const onSubmit = async (data: LoginFormData) => {
     try {
       setLoading(true)
-      // Mocking a standard login, setting them up to select a persona on the dashboard
-      const user = await authService.mockLogin("Pending")
-      setAuth({ ...user, email })
-      toast.success("Authentication successful", "Welcome to AEGIS.")
-      router.push("/dashboard")
+      const user = await authService.login(data)
+      setAuth(user)
+      toast.success("Authentication successful", "Welcome back to AEGIS.")
+      // PublicRoute will auto-redirect based on role
     } catch (error: any) {
       toast.error("Authentication failed", error.message || "Invalid credentials.")
+      setLoading(false)
+    }
+  }
+
+  const handleOAuth = async (provider: "google" | "microsoft") => {
+    try {
+      setLoading(true)
+      const user = await authService.oauthLogin(provider)
+      setAuth(user)
+      toast.success("Authentication successful", `Connected with ${provider}.`)
+    } catch (error: any) {
+      toast.error("OAuth failed", error.message)
       setLoading(false)
     }
   }
@@ -45,69 +60,105 @@ export default function LoginPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md mx-auto"
+        className="w-full"
       >
-        <div className="mb-8 text-center">
-          <h1 className="font-display text-3xl font-bold text-white mb-2 tracking-tight">Access Terminal</h1>
-          <p className="text-muted-text">Enter your credentials to access the operational intelligence platform.</p>
+        <div className="mb-8">
+          <h1 className="font-display text-3xl font-bold text-white mb-2 tracking-tight">Access Control</h1>
+          <p className="text-muted-text">Authenticate to access the stadium intelligence platform.</p>
         </div>
 
-        <Card className="p-8 border-white/10 bg-surface/50 backdrop-blur-md">
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-text">Operator Email</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-muted-text" />
-                </div>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-black/20 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-primary-accent transition-colors"
-                  placeholder="operator@aegis.system"
-                  required
-                />
-              </div>
-            </div>
+        <div className="flex gap-4 mb-8">
+          <Button 
+            variant="glass" 
+            className="flex-1 border-white/10 hover:bg-white/5 h-12"
+            onClick={() => handleOAuth("google")}
+            disabled={isLoading}
+          >
+            Google
+          </Button>
+          <Button 
+            variant="glass" 
+            className="flex-1 border-white/10 hover:bg-white/5 h-12"
+            onClick={() => handleOAuth("microsoft")}
+            disabled={isLoading}
+          >
+            Microsoft
+          </Button>
+        </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-text">Security Passcode</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-muted-text" />
-                </div>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-black/20 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-primary-accent transition-colors"
-                  placeholder="••••••••••••"
-                  required
-                />
-              </div>
-            </div>
-
-            <Button 
-              type="submit" 
-              className="w-full h-12 flex items-center justify-center space-x-2" 
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                <>
-                  <LogIn className="h-5 w-5" />
-                  <span>Authenticate</span>
-                </>
-              )}
-            </Button>
-          </form>
-          
-          <div className="mt-6 text-center text-xs text-muted-text">
-            <p>Demo Mode: Any credentials will work.</p>
+        <div className="relative mb-8">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-white/10" />
           </div>
-        </Card>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-primary-bg px-4 text-muted-text">Or continue with email</span>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="email">Secure Email</Label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-3 h-5 w-5 text-muted-text/50" />
+              <Input
+                id="email"
+                type="email"
+                placeholder="operative@aegis.ai"
+                className="pl-10"
+                error={!!errors.email}
+                {...register("email")}
+                disabled={isLoading}
+              />
+            </div>
+            {errors.email && (
+              <p className="text-xs text-error mt-1">{errors.email.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="password">Passkey</Label>
+              <Link 
+                href="/forgot-password" 
+                className="text-xs text-primary-accent hover:text-white transition-colors"
+              >
+                Forgot credentials?
+              </Link>
+            </div>
+            <div className="relative">
+              <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-text/50" />
+              <Input
+                id="password"
+                type="password"
+                className="pl-10"
+                error={!!errors.password}
+                {...register("password")}
+                disabled={isLoading}
+              />
+            </div>
+            {errors.password && (
+              <p className="text-xs text-error mt-1">{errors.password.message}</p>
+            )}
+          </div>
+
+          <Button type="submit" className="w-full h-12 text-base" disabled={isLoading}>
+            {isLoading ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              <>
+                Initialize Session
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </>
+            )}
+          </Button>
+        </form>
+
+        <div className="mt-8 text-center text-sm text-muted-text">
+          Don't have clearance?{" "}
+          <Link href="/register" className="text-white hover:text-primary-accent transition-colors font-medium">
+            Request access
+          </Link>
+        </div>
       </motion.div>
     </PublicRoute>
   )

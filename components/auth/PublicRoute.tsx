@@ -13,12 +13,7 @@ export function PublicRoute({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     setMounted(true)
     if (isAuthenticated) {
-      // If they haven't selected a role, send to onboarding
-      if (!user?.role) {
-        router.replace("/onboarding")
-      } else {
-        router.replace("/loading") // Placeholder for dashboard
-      }
+      router.replace("/dashboard")
     }
   }, [isAuthenticated, user, router])
 
