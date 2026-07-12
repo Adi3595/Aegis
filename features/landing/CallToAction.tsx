@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { MagneticButton } from "@/animations/advanced"
 import { Slide } from "@/animations"
+import { toast } from "sonner"
 
 export default function CallToAction() {
   return (
@@ -43,9 +44,9 @@ export default function CallToAction() {
         </Slide>
 
         <Slide direction="up" delay={0.6} className="mt-8 flex items-center space-x-6 text-sm font-medium text-muted-text">
-          <a href="#" className="hover:text-white transition-colors">GitHub</a>
-          <span className="w-1 h-1 rounded-full bg-white/20" />
-          <a href="#" className="hover:text-white transition-colors">Documentation</a>
+          <button onClick={() => toast.info("GitHub repository will be public soon!")} className="hover:text-white transition-colors">GitHub</button>
+          <span className="text-white/20">•</span>
+          <button onClick={() => toast.info("Documentation is being generated...")} className="hover:text-white transition-colors">Documentation</button>
         </Slide>
       </div>
     </div>

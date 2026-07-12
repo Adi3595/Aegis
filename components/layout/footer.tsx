@@ -1,15 +1,38 @@
 "use client"
 
 import * as React from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Shield, Code, Globe, Briefcase } from "lucide-react"
 import { Logo } from "@/components/ui/logo"
+import { toast } from "sonner"
 
 export function Footer() {
   const pathname = usePathname()
+  const router = useRouter()
   const isAuthRoute = ["/login", "/register", "/forgot-password", "/reset-password", "/verify-email", "/onboarding", "/loading"].includes(pathname)
   const isDashboardRoute = pathname.startsWith("/dashboard")
   const shouldHide = isAuthRoute || isDashboardRoute
+
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
+    e.preventDefault()
+    if (href.startsWith("#")) {
+      // @ts-ignore
+      if (window.lenis) {
+        // @ts-ignore
+        window.lenis.scrollTo(href, { offset: -80 })
+      } else {
+        const target = document.querySelector(href)
+        if (target) {
+          window.scrollTo({
+            top: target.getBoundingClientRect().top + window.scrollY - 80,
+            behavior: "smooth"
+          })
+        }
+      }
+    } else {
+      router.push(href)
+    }
+  }
 
   if (shouldHide) return null
 
@@ -29,34 +52,34 @@ export function Footer() {
               The intelligence operating system for modern mega-events. Powering FIFA World Cup 2026 with autonomous AI agents and real-time digital twins.
             </p>
             <div className="flex items-center space-x-4">
-              <a href="#" className="text-muted-text hover:text-white transition-colors" aria-label="GitHub"><Code className="h-5 w-5" /></a>
-              <a href="#" className="text-muted-text hover:text-white transition-colors" aria-label="Website"><Globe className="h-5 w-5" /></a>
-              <a href="#" className="text-muted-text hover:text-white transition-colors" aria-label="LinkedIn"><Briefcase className="h-5 w-5" /></a>
+              <button onClick={() => toast.info("GitHub repository will be public soon!")} className="text-muted-text hover:text-white transition-colors" aria-label="GitHub"><Code className="h-5 w-5" /></button>
+              <button onClick={() => toast.info("Website is currently in beta.")} className="text-muted-text hover:text-white transition-colors" aria-label="Website"><Globe className="h-5 w-5" /></button>
+              <button onClick={() => toast.info("LinkedIn page coming soon!")} className="text-muted-text hover:text-white transition-colors" aria-label="LinkedIn"><Briefcase className="h-5 w-5" /></button>
             </div>
           </div>
 
           <div className="flex flex-col space-y-4 text-sm">
             <h4 className="font-display font-semibold text-white mb-2">Product</h4>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">Features</a>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">Live Simulation</a>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">Digital Twin</a>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">Multi-Agent System</a>
+            <a href="#features" onClick={(e) => handleSmoothScroll(e, "#features")} className="text-muted-text hover:text-primary-accent transition-colors">Features</a>
+            <a href="#simulation" onClick={(e) => handleSmoothScroll(e, "#simulation")} className="text-muted-text hover:text-primary-accent transition-colors">Live Simulation</a>
+            <a href="#technology" onClick={(e) => handleSmoothScroll(e, "#technology")} className="text-muted-text hover:text-primary-accent transition-colors">Digital Twin</a>
+            <a href="#technology" onClick={(e) => handleSmoothScroll(e, "#technology")} className="text-muted-text hover:text-primary-accent transition-colors">Multi-Agent System</a>
           </div>
 
           <div className="flex flex-col space-y-4 text-sm">
             <h4 className="font-display font-semibold text-white mb-2">Developers</h4>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">Documentation</a>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">Technology Stack</a>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">API Reference</a>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">GitHub Repository</a>
+            <button onClick={() => toast.info("Documentation is being generated...")} className="text-left text-muted-text hover:text-primary-accent transition-colors">Documentation</button>
+            <a href="#technology" onClick={(e) => handleSmoothScroll(e, "#technology")} className="text-muted-text hover:text-primary-accent transition-colors">Technology Stack</a>
+            <button onClick={() => toast.info("API Reference is being generated...")} className="text-left text-muted-text hover:text-primary-accent transition-colors">API Reference</button>
+            <button onClick={() => toast.info("GitHub repository will be public soon!")} className="text-left text-muted-text hover:text-primary-accent transition-colors">GitHub Repository</button>
           </div>
 
           <div className="flex flex-col space-y-4 text-sm">
             <h4 className="font-display font-semibold text-white mb-2">Company</h4>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">About</a>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">Contact</a>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">Privacy Policy</a>
-            <a href="#" className="text-muted-text hover:text-primary-accent transition-colors">Terms of Service</a>
+            <button onClick={() => toast.info("About page is under construction.")} className="text-left text-muted-text hover:text-primary-accent transition-colors">About</button>
+            <button onClick={() => toast.info("Contact form is under construction.")} className="text-left text-muted-text hover:text-primary-accent transition-colors">Contact</button>
+            <button onClick={() => toast.info("Privacy Policy will be available soon.")} className="text-left text-muted-text hover:text-primary-accent transition-colors">Privacy Policy</button>
+            <button onClick={() => toast.info("Terms of Service will be available soon.")} className="text-left text-muted-text hover:text-primary-accent transition-colors">Terms of Service</button>
           </div>
         </div>
 
