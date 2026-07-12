@@ -6,11 +6,11 @@ import { Users, Shield, PlusSquare, Wrench, Bus, Activity } from "lucide-react"
 
 // Mock real-time resources since backend doesn't explicitly track individual staff yet
 const RESOURCES = [
-  { id: "volunteers", label: "Volunteers", total: 120, deployed: 98, icon: Users, color: "text-blue-400" },
-  { id: "security", label: "Security Personnel", total: 85, deployed: 85, icon: Shield, color: "text-red-400" },
-  { id: "medical", label: "Medical Staff", total: 40, deployed: 12, icon: PlusSquare, color: "text-green-400" },
-  { id: "maintenance", label: "Maintenance Crews", total: 25, deployed: 18, icon: Wrench, color: "text-yellow-400" },
-  { id: "transport", label: "Transport Coord.", total: 15, deployed: 15, icon: Bus, color: "text-purple-400" },
+  { id: "volunteers", label: "Volunteers", total: 120, deployed: 98, icon: Users, color: "text-ai-accent" },
+  { id: "security", label: "Security Personnel", total: 45, deployed: 42, icon: Shield, color: "text-warning" },
+  { id: "medical", label: "Medical Staff", total: 20, deployed: 18, icon: Activity, color: "text-error" },
+  { id: "maintenance", label: "Maintenance", total: 30, deployed: 25, icon: Wrench, color: "text-white" },
+  { id: "transport", label: "Transport Coord.", total: 15, deployed: 15, icon: Bus, color: "text-primary-accent" },
 ]
 
 export function ResourcesWorkspace() {

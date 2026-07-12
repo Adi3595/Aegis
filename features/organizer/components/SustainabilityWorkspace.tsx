@@ -37,7 +37,7 @@ export function SustainabilityWorkspace() {
       <GlassPanel className="p-5 flex flex-col justify-between">
         <div className="flex items-start justify-between mb-4">
           <span className="font-semibold text-muted-text">Water Usage</span>
-          <div className="p-2 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">
+          <div className="p-2 rounded-lg bg-ai-accent/20 text-ai-accent border border-ai-accent/30">
             <Droplet className="w-5 h-5" />
           </div>
         </div>
