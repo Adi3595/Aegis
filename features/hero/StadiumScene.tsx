@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
-import { Sparkles, SpotLight } from "@react-three/drei"
+import { Sparkles, SpotLight, Grid } from "@react-three/drei"
 import * as THREE from "three"
 
 function CameraRig() {
@@ -74,26 +74,26 @@ function Lights() {
   const [l3, setL3] = React.useState(0)
 
   React.useEffect(() => {
-    // Light 1: flickers on around 0.5s
-    setTimeout(() => setL1(2), 500)
-    setTimeout(() => setL1(0), 600)
-    setTimeout(() => setL1(2), 700)
-    setTimeout(() => setL1(0), 800)
-    setTimeout(() => setL1(2), 1000)
+    // Light 1: flickers on around 2.0s
+    setTimeout(() => setL1(2), 2000)
+    setTimeout(() => setL1(0), 2100)
+    setTimeout(() => setL1(2), 2200)
+    setTimeout(() => setL1(0), 2300)
+    setTimeout(() => setL1(2), 2500)
 
-    // Light 2: flickers on around 1.5s
-    setTimeout(() => setL2(2), 1500)
-    setTimeout(() => setL2(0), 1600)
-    setTimeout(() => setL2(2), 1700)
-    setTimeout(() => setL2(0), 1800)
-    setTimeout(() => setL2(2), 2000)
+    // Light 2: flickers on around 2.7s
+    setTimeout(() => setL2(2), 2700)
+    setTimeout(() => setL2(0), 2800)
+    setTimeout(() => setL2(2), 2900)
+    setTimeout(() => setL2(0), 3000)
+    setTimeout(() => setL2(2), 3200)
 
-    // Light 3: flickers on around 2.5s
-    setTimeout(() => setL3(1.5), 2500)
-    setTimeout(() => setL3(0), 2600)
-    setTimeout(() => setL3(1.5), 2700)
-    setTimeout(() => setL3(0), 2800)
-    setTimeout(() => setL3(1.5), 3000)
+    // Light 3: flickers on around 3.4s
+    setTimeout(() => setL3(1.5), 3400)
+    setTimeout(() => setL3(0), 3500)
+    setTimeout(() => setL3(1.5), 3600)
+    setTimeout(() => setL3(0), 3700)
+    setTimeout(() => setL3(1.5), 3900)
   }, [])
 
   return (
@@ -163,6 +163,19 @@ export default function StadiumScene() {
             speed={0.4} 
             opacity={0.2} 
             color="#32D4FF" 
+          />
+          
+          <Grid
+            position={[0, -2.01, 0]}
+            args={[200, 200]}
+            cellSize={1}
+            cellThickness={1}
+            cellColor="#32D4FF"
+            sectionSize={5}
+            sectionThickness={1.5}
+            sectionColor="#7C5CFF"
+            fadeDistance={80}
+            fadeStrength={1}
           />
         </React.Suspense>
         

@@ -110,7 +110,7 @@ export function Navbar() {
               <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
               <span className="text-xs font-mono text-muted-text">SYSTEM ONLINE</span>
             </div>
-            <Link href="/dashboard" className="hidden xl:flex">
+            <Link href="/login" className="hidden xl:flex">
               <Button variant="glass" size="sm">
                 Launch Platform
               </Button>
@@ -161,7 +161,7 @@ export function Navbar() {
                 </a>
               ))}
               <div className="pt-8 border-t border-white/10">
-                <Link href="/dashboard" className="w-full">
+                <Link href="/login" className="w-full">
                   <Button className="w-full h-14 text-lg">Launch Platform</Button>
                 </Link>
               </div>

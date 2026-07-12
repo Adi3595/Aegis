@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { motion } from "framer-motion"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { StatusPill } from "@/components/ui/status-pill"
 import { MagneticButton } from "@/animations/advanced"
@@ -103,15 +104,19 @@ export function HeroContent() {
           transition={{ duration: 0.7, delay: 1.0 }}
         >
           <MagneticButton>
-            <Button size="lg" className="h-14 px-8 text-lg w-full sm:w-auto relative group overflow-hidden">
-              <span className="relative z-10">Launch Experience</span>
-              <span className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[ripple_1s_ease-in-out_infinite]" />
-            </Button>
+            <Link href="/login" className="w-full sm:w-auto">
+              <Button size="lg" className="h-14 px-8 text-lg w-full sm:w-auto relative group overflow-hidden">
+                <span className="relative z-10">Launch Experience</span>
+                <span className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[ripple_1s_ease-in-out_infinite]" />
+              </Button>
+            </Link>
           </MagneticButton>
           <MagneticButton>
-            <Button variant="glass" size="lg" className="h-14 px-8 text-lg w-full sm:w-auto">
-              Watch Live Simulation
-            </Button>
+            <Link href="/dashboard/simulation" className="w-full sm:w-auto">
+              <Button variant="glass" size="lg" className="h-14 px-8 text-lg w-full sm:w-auto">
+                Watch Live Simulation
+              </Button>
+            </Link>
           </MagneticButton>
         </motion.div>
       </motion.div>
