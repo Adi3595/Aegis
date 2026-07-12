@@ -2,9 +2,9 @@
 
 import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { Shield, Code, Globe, Briefcase } from "lucide-react"
+import { Globe, Briefcase, Code } from "lucide-react"
 import { Logo } from "@/components/ui/logo"
-import { toast } from "sonner"
+import { toast } from "@/store/toastStore"
 
 export function Footer() {
   const pathname = usePathname()

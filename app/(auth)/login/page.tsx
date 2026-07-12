@@ -34,7 +34,7 @@ export default function LoginPage() {
       setLoading(true)
       const user = await authService.login(data)
       setAuth(user)
-      toast.success("Authentication successful", "Welcome back to AEGIS AI.")
+      toast.success("Authentication successful", "Welcome back to AEGIS.")
       // PublicRoute will auto-redirect based on role
     } catch (error: any) {
       toast.error("Authentication failed", error.message || "Invalid credentials.")

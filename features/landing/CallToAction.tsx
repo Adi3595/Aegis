@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { MagneticButton } from "@/animations/advanced"
 import { Slide } from "@/animations"
-import { toast } from "sonner"
+import { toast } from "@/store/toastStore"
 
 export default function CallToAction() {
   return (

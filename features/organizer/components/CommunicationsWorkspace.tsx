@@ -71,7 +71,7 @@ export function CommunicationsWorkspace() {
             <h3 className="font-semibold text-white">Multilingual Translation</h3>
           </div>
           <p className="text-sm text-muted-text mb-4">
-            Broadcasts are automatically translated into 5+ supported languages (Spanish, French, Arabic, Hindi, Portuguese) upon transmission using the AEGIS AI Translation Service.
+            Broadcasts are automatically translated into 5+ supported languages (Spanish, French, Arabic, Hindi, Portuguese) upon transmission using the AEGIS Translation Service.
           </p>
           <div className="flex gap-2">
             {['EN', 'ES', 'FR', 'AR', 'HI', 'PT'].map(lang => (

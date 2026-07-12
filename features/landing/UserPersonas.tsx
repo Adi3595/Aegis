@@ -22,7 +22,7 @@ export default function UserPersonas() {
       <Slide direction="up">
         <SectionHeading 
           title="Tailored Intelligence" 
-          subtitle="AEGIS AI adapts its interface and insights based on who is using it, ensuring everyone has exactly the tools they need."
+          subtitle="AEGIS adapts its interface and insights based on who is using it, ensuring everyone has exactly the tools they need."
           align="center"
         />
       </Slide>

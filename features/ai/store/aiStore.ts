@@ -21,7 +21,7 @@ export const useAIStore = create<AIState>((set) => ({
     {
       id: "welcome-1",
       role: "system",
-      content: "AEGIS AI Orchestration Layer initialized. Ready to assist with operations.",
+      content: "AEGIS Orchestration Layer initialized. Ready to assist with operations.",
       timestamp: new Date().toISOString()
     }
   ],
