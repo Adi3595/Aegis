@@ -20,6 +20,17 @@ const AGENTS = [
 ]
 
 export default function MultiAgentNetwork() {
+  const [radius, setRadius] = React.useState(220)
+  
+  React.useEffect(() => {
+    const updateRadius = () => {
+      setRadius(window.innerWidth < 640 ? 130 : 220)
+    }
+    updateRadius()
+    window.addEventListener('resize', updateRadius)
+    return () => window.removeEventListener('resize', updateRadius)
+  }, [])
+
   return (
     <div className="container mx-auto px-4 py-32 border-t border-white/10 overflow-hidden" id="technology">
       <Slide direction="up">
@@ -30,12 +41,11 @@ export default function MultiAgentNetwork() {
         />
       </Slide>
 
-      <div className="relative mx-auto mt-20 h-[500px] w-full max-w-[800px] sm:h-[600px]">
+      <div className="relative mx-auto mt-20 h-[400px] w-full max-w-[800px] sm:h-[600px]">
         {/* Connection Lines (SVG) */}
         <svg className="absolute inset-0 h-full w-full pointer-events-none" viewBox="-400 -300 800 600">
           {AGENTS.map((agent, i) => {
             const rad = (agent.angle * Math.PI) / 180
-            const radius = window.innerWidth < 640 ? 140 : 220
             const x = Math.cos(rad) * radius
             const y = Math.sin(rad) * radius
             
@@ -79,7 +89,9 @@ export default function MultiAgentNetwork() {
         {AGENTS.map((agent, i) => {
           const rad = (agent.angle * Math.PI) / 180
           const Icon = agent.icon
-          // Handle responsive radius via CSS vars or percentage (using a simple styled wrapper here)
+          const x = Math.cos(rad) * radius
+          const y = Math.sin(rad) * radius
+
           return (
             <motion.div 
               key={agent.id}
@@ -89,9 +101,7 @@ export default function MultiAgentNetwork() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: i * 0.1, type: "spring", bounce: 0.5 }}
               style={{
-                transform: `translate(-50%, -50%) translate(calc(cos(${rad}rad) * var(--radius)), calc(sin(${rad}rad) * var(--radius)))`,
-                // @ts-ignore
-                "--radius": "min(35vw, 220px)"
+                transform: `translate(-50%, -50%) translate(${x}px, ${y}px)`
               }}
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-full border border-primary-accent/30 bg-surface text-primary-accent shadow-lg transition-transform hover:scale-110 cursor-pointer">
