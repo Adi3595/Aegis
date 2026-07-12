@@ -64,7 +64,7 @@
   }
 
   .panel-glass-interactive {
-    @apply panel-glass transition-all duration-300 hover:-translate-y-1 hover:bg-[#0C1224]/80 hover:brightness-110 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_12px_40px_rgba(50,212,255,0.15)];
+    @apply relative overflow-hidden rounded-2xl border border-white/10 bg-[#0C1224]/60 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#0C1224]/80 hover:brightness-110 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_12px_40px_rgba(50,212,255,0.15)];
   }
 
   .panel-solid {
