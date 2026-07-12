@@ -3,39 +3,36 @@
 import * as React from "react"
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
-import { Shield, Activity, Users, Star, BarChart3, HeartPulse, Loader2 } from "lucide-react"
+import { Loader2, Mail, Lock, LogIn } from "lucide-react"
 
 import { authService } from "@/features/auth/services/authService"
 import { useAuthStore } from "@/features/auth/store/authStore"
 import { toast } from "@/store/toastStore"
 import { PublicRoute } from "@/components/auth/PublicRoute"
 import { Card } from "@/components/ui/card"
-
-const PERSONAS = [
-  { id: "organizer", role: "Organizer", icon: Shield, desc: "Full tactical overview", color: "text-primary-accent", bg: "bg-primary-accent/10", border: "border-primary-accent/30" },
-  { id: "executive", role: "Executive", icon: BarChart3, desc: "High-level metrics", color: "text-ai-accent", bg: "bg-ai-accent/10", border: "border-ai-accent/30" },
-  { id: "security", role: "Security", icon: Shield, desc: "Incident response", color: "text-warning", bg: "bg-warning/10", border: "border-warning/30" },
-  { id: "medical", role: "Medical", icon: HeartPulse, desc: "Triage & health", color: "text-error", bg: "bg-error/10", border: "border-error/30" },
-  { id: "volunteer", role: "Volunteer", icon: Users, desc: "Ground operations", color: "text-success", bg: "bg-success/10", border: "border-success/30" },
-  { id: "fan", role: "Fan", icon: Star, desc: "Live match experience", color: "text-white", bg: "bg-white/10", border: "border-white/30" },
-]
+import { Button } from "@/components/ui/button"
 
 export default function LoginPage() {
   const router = useRouter()
   const { setAuth, setLoading, isLoading } = useAuthStore()
+  
+  const [email, setEmail] = React.useState("")
+  const [password, setPassword] = React.useState("")
 
-  const handlePersonaLogin = async (role: string) => {
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email || !password) {
+      toast.error("Validation Error", "Please enter both email and password.")
+      return
+    }
+
     try {
       setLoading(true)
-      const user = await authService.mockLogin(role)
-      setAuth(user)
-      toast.success("Authentication successful", `Welcome back, ${role}.`)
-      // PublicRoute will auto-redirect based on role, but we can force it here for safety
-      if (role === "Fan") router.push("/dashboard/fan")
-      else if (role === "Volunteer") router.push("/dashboard/volunteer")
-      else if (role === "Organizer") router.push("/dashboard/organizer")
-      else if (role === "Executive") router.push("/dashboard/executive")
-      else router.push(`/dashboard/${role.toLowerCase()}`)
+      // Mocking a standard login, setting them up to select a persona on the dashboard
+      const user = await authService.mockLogin("Pending")
+      setAuth({ ...user, email })
+      toast.success("Authentication successful", "Welcome to AEGIS.")
+      router.push("/dashboard")
     } catch (error: any) {
       toast.error("Authentication failed", error.message || "Invalid credentials.")
       setLoading(false)
@@ -48,44 +45,69 @@ export default function LoginPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-2xl mx-auto"
+        className="w-full max-w-md mx-auto"
       >
         <div className="mb-8 text-center">
-          <h1 className="font-display text-3xl font-bold text-white mb-2 tracking-tight">Select Persona</h1>
-          <p className="text-muted-text">Initialize a simulated environment by selecting an access tier.</p>
+          <h1 className="font-display text-3xl font-bold text-white mb-2 tracking-tight">Access Terminal</h1>
+          <p className="text-muted-text">Enter your credentials to access the operational intelligence platform.</p>
         </div>
 
-        {isLoading ? (
-          <div className="h-64 flex flex-col items-center justify-center gap-4">
-            <Loader2 className="h-8 w-8 text-primary-accent animate-spin" />
-            <p className="text-sm font-mono text-muted-text">Authenticating via secure proxy...</p>
+        <Card className="p-8 border-white/10 bg-surface/50 backdrop-blur-md">
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-muted-text">Operator Email</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Mail className="h-5 w-5 text-muted-text" />
+                </div>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-black/20 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-primary-accent transition-colors"
+                  placeholder="operator@aegis.system"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-muted-text">Security Passcode</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className="h-5 w-5 text-muted-text" />
+                </div>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-black/20 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-primary-accent transition-colors"
+                  placeholder="••••••••••••"
+                  required
+                />
+              </div>
+            </div>
+
+            <Button 
+              type="submit" 
+              className="w-full h-12 flex items-center justify-center space-x-2" 
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <>
+                  <LogIn className="h-5 w-5" />
+                  <span>Authenticate</span>
+                </>
+              )}
+            </Button>
+          </form>
+          
+          <div className="mt-6 text-center text-xs text-muted-text">
+            <p>Demo Mode: Any credentials will work.</p>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {PERSONAS.map((persona, i) => {
-              const Icon = persona.icon
-              return (
-                <motion.div
-                  key={persona.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <Card 
-                    className={`p-6 cursor-pointer hover:scale-[1.02] transition-all border ${persona.border} hover:bg-white/5 h-full flex flex-col items-center text-center`}
-                    onClick={() => handlePersonaLogin(persona.role)}
-                  >
-                    <div className={`h-12 w-12 rounded-full flex items-center justify-center mb-4 ${persona.bg} ${persona.color}`}>
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <h3 className="font-bold text-white mb-1">{persona.role}</h3>
-                    <p className="text-xs text-muted-text">{persona.desc}</p>
-                  </Card>
-                </motion.div>
-              )
-            })}
-          </div>
-        )}
+        </Card>
       </motion.div>
     </PublicRoute>
   )
