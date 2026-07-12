@@ -1,55 +1,43 @@
 "use client"
 
 import * as React from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { motion } from "framer-motion"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Shield, Mail, Lock, ArrowRight, Loader2 } from "lucide-react"
+import { Shield, Activity, Users, Star, BarChart3, HeartPulse, Loader2 } from "lucide-react"
 
-import { loginSchema, LoginFormData } from "@/features/auth/schemas/authSchemas"
 import { authService } from "@/features/auth/services/authService"
 import { useAuthStore } from "@/features/auth/store/authStore"
 import { toast } from "@/store/toastStore"
 import { PublicRoute } from "@/components/auth/PublicRoute"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+
+const PERSONAS = [
+  { id: "organizer", role: "Organizer", icon: Shield, desc: "Full tactical overview", color: "text-primary-accent", bg: "bg-primary-accent/10", border: "border-primary-accent/30" },
+  { id: "executive", role: "Executive", icon: BarChart3, desc: "High-level metrics", color: "text-ai-accent", bg: "bg-ai-accent/10", border: "border-ai-accent/30" },
+  { id: "security", role: "Security", icon: Shield, desc: "Incident response", color: "text-warning", bg: "bg-warning/10", border: "border-warning/30" },
+  { id: "medical", role: "Medical", icon: HeartPulse, desc: "Triage & health", color: "text-error", bg: "bg-error/10", border: "border-error/30" },
+  { id: "volunteer", role: "Volunteer", icon: Users, desc: "Ground operations", color: "text-success", bg: "bg-success/10", border: "border-success/30" },
+  { id: "fan", role: "Fan", icon: Star, desc: "Live match experience", color: "text-white", bg: "bg-white/10", border: "border-white/30" },
+]
 
 export default function LoginPage() {
   const router = useRouter()
   const { setAuth, setLoading, isLoading } = useAuthStore()
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
-  })
-
-  const onSubmit = async (data: LoginFormData) => {
+  const handlePersonaLogin = async (role: string) => {
     try {
       setLoading(true)
-      const user = await authService.login(data)
+      const user = await authService.mockLogin(role)
       setAuth(user)
-      toast.success("Authentication successful", "Welcome back to AEGIS.")
-      // PublicRoute will auto-redirect based on role
+      toast.success("Authentication successful", `Welcome back, ${role}.`)
+      // PublicRoute will auto-redirect based on role, but we can force it here for safety
+      if (role === "Fan") router.push("/dashboard/fan")
+      else if (role === "Volunteer") router.push("/dashboard/volunteer")
+      else if (role === "Organizer") router.push("/dashboard/organizer")
+      else if (role === "Executive") router.push("/dashboard/executive")
+      else router.push(`/dashboard/${role.toLowerCase()}`)
     } catch (error: any) {
       toast.error("Authentication failed", error.message || "Invalid credentials.")
-      setLoading(false)
-    }
-  }
-
-  const handleOAuth = async (provider: "google" | "microsoft") => {
-    try {
-      setLoading(true)
-      const user = await authService.oauthLogin(provider)
-      setAuth(user)
-      toast.success("Authentication successful", `Connected with ${provider}.`)
-    } catch (error: any) {
-      toast.error("OAuth failed", error.message)
       setLoading(false)
     }
   }
@@ -60,105 +48,44 @@ export default function LoginPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full"
+        className="w-full max-w-2xl mx-auto"
       >
-        <div className="mb-8">
-          <h1 className="font-display text-3xl font-bold text-white mb-2 tracking-tight">Access Control</h1>
-          <p className="text-muted-text">Authenticate to access the stadium intelligence platform.</p>
+        <div className="mb-8 text-center">
+          <h1 className="font-display text-3xl font-bold text-white mb-2 tracking-tight">Select Persona</h1>
+          <p className="text-muted-text">Initialize a simulated environment by selecting an access tier.</p>
         </div>
 
-        <div className="flex gap-4 mb-8">
-          <Button 
-            variant="glass" 
-            className="flex-1 border-white/10 hover:bg-white/5 h-12"
-            onClick={() => handleOAuth("google")}
-            disabled={isLoading}
-          >
-            Google
-          </Button>
-          <Button 
-            variant="glass" 
-            className="flex-1 border-white/10 hover:bg-white/5 h-12"
-            onClick={() => handleOAuth("microsoft")}
-            disabled={isLoading}
-          >
-            Microsoft
-          </Button>
-        </div>
-
-        <div className="relative mb-8">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-white/10" />
+        {isLoading ? (
+          <div className="h-64 flex flex-col items-center justify-center gap-4">
+            <Loader2 className="h-8 w-8 text-primary-accent animate-spin" />
+            <p className="text-sm font-mono text-muted-text">Authenticating via secure proxy...</p>
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-primary-bg px-4 text-muted-text">Or continue with email</span>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {PERSONAS.map((persona, i) => {
+              const Icon = persona.icon
+              return (
+                <motion.div
+                  key={persona.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  <Card 
+                    className={`p-6 cursor-pointer hover:scale-[1.02] transition-all border ${persona.border} hover:bg-white/5 h-full flex flex-col items-center text-center`}
+                    onClick={() => handlePersonaLogin(persona.role)}
+                  >
+                    <div className={`h-12 w-12 rounded-full flex items-center justify-center mb-4 ${persona.bg} ${persona.color}`}>
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="font-bold text-white mb-1">{persona.role}</h3>
+                    <p className="text-xs text-muted-text">{persona.desc}</p>
+                  </Card>
+                </motion.div>
+              )
+            })}
           </div>
-        </div>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="email">Secure Email</Label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-3 h-5 w-5 text-muted-text/50" />
-              <Input
-                id="email"
-                type="email"
-                placeholder="operative@aegis.ai"
-                className="pl-10"
-                error={!!errors.email}
-                {...register("email")}
-                disabled={isLoading}
-              />
-            </div>
-            {errors.email && (
-              <p className="text-xs text-error mt-1">{errors.email.message}</p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password">Passkey</Label>
-              <Link 
-                href="/forgot-password" 
-                className="text-xs text-primary-accent hover:text-white transition-colors"
-              >
-                Forgot credentials?
-              </Link>
-            </div>
-            <div className="relative">
-              <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-text/50" />
-              <Input
-                id="password"
-                type="password"
-                className="pl-10"
-                error={!!errors.password}
-                {...register("password")}
-                disabled={isLoading}
-              />
-            </div>
-            {errors.password && (
-              <p className="text-xs text-error mt-1">{errors.password.message}</p>
-            )}
-          </div>
-
-          <Button type="submit" className="w-full h-12 text-base" disabled={isLoading}>
-            {isLoading ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
-            ) : (
-              <>
-                Initialize Session
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </>
-            )}
-          </Button>
-        </form>
-
-        <div className="mt-8 text-center text-sm text-muted-text">
-          Don't have clearance?{" "}
-          <Link href="/register" className="text-white hover:text-primary-accent transition-colors font-medium">
-            Request access
-          </Link>
-        </div>
+        )}
       </motion.div>
     </PublicRoute>
   )

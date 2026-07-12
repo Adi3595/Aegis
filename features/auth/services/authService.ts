@@ -60,6 +60,22 @@ export const authService = {
     return user
   },
 
+  async mockLogin(role: string): Promise<User> {
+    toast.loading(`Initializing ${role} Workspace...`, undefined, { duration: 1500 })
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+    
+    if (typeof window !== "undefined") {
+      localStorage.setItem("access_token", "mock_token_123")
+    }
+
+    return {
+      id: `usr_mock_${Math.floor(Math.random() * 1000)}`,
+      email: `${role.toLowerCase()}@aegis.system`,
+      name: `${role} User`,
+      role: role
+    } as User
+  },
+
   async oauthLogin(provider: "google" | "microsoft"): Promise<User> {
     toast.loading(`Connecting to ${provider}...`, undefined, { duration: 2000 })
     // Mock OAuth delay

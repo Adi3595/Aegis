@@ -1,128 +1,98 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
-import { useAuthStore } from "@/features/auth/store/authStore"
-import { useVolunteerStore } from "@/features/volunteer/store/volunteerStore"
-import { OfflineIndicator } from "@/features/fan/components/OfflineIndicator" // Reusing offline badge
-import { VolunteerTasks } from "@/features/volunteer/components/VolunteerTasks"
-import { VolunteerMap } from "@/features/volunteer/components/VolunteerMap"
-import { IncidentReporter } from "@/features/volunteer/components/IncidentReporter"
-import { VolunteerCopilot } from "@/features/volunteer/components/VolunteerCopilot"
-import { ShiftTrackingUI } from "@/features/volunteer/components/ShiftTrackingUI"
-import { SmartRoutingMap } from "@/features/volunteer/components/SmartRoutingMap"
-import { CheckCircle, Map, AlertTriangle, MessageSquare } from "lucide-react"
+import { motion } from "framer-motion"
+import { SectionHeading } from "@/components/ui/section-heading"
+import { Card } from "@/components/ui/card"
+import { Calendar, CheckCircle, MapPin, Clock } from "lucide-react"
 
-export default function VolunteerDashboardPage() {
-  const router = useRouter()
-  const { user, isAuthenticated, isLoading } = useAuthStore()
-  const { shiftStartTime, startShift, syncIncidents } = useVolunteerStore()
-  const [activeTab, setActiveTab] = React.useState<"tasks" | "map" | "report">("tasks")
-
-  React.useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      if (user?.role !== "Volunteer") {
-        router.replace("/dashboard")
-      }
-    }
-  }, [user, isAuthenticated, isLoading, router])
-
-  // Sync incidents when coming back online
-  React.useEffect(() => {
-    const handleOnline = () => syncIncidents()
-    window.addEventListener("online", handleOnline)
-    return () => window.removeEventListener("online", handleOnline)
-  }, [syncIncidents])
-
-  if (!user || user.role !== "Volunteer") return null
+export default function VolunteerPage() {
+  const container = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  }
+  const item = {
+    hidden: { opacity: 0, x: -20 },
+    show: { opacity: 1, x: 0 }
+  }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-80px)] overflow-hidden relative pb-16 lg:pb-0">
-      
-      {/* Top Header */}
-      <div className="flex items-center justify-between mb-4 shrink-0">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-white tracking-tight">
-            Hello, {user.name}
-          </h1>
-          <p className="text-sm text-muted-text">
-            {shiftStartTime ? "Shift Active" : "Off Duty"}
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <OfflineIndicator />
-          {!shiftStartTime ? (
-            <button onClick={startShift} className="bg-primary-accent text-primary-bg px-4 py-2 rounded-lg text-sm font-bold shadow-md">
-              Start Shift
-            </button>
-          ) : (
-            <div className="bg-success/20 text-success border border-success/30 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-              On Duty
+    <motion.div variants={container} initial="hidden" animate="show" className="space-y-6 pb-20">
+      <SectionHeading title="Volunteer Operations" subtitle="Your current shift details and assignments." />
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div variants={item} className="md:col-span-2 space-y-6">
+          <Card className="p-6 bg-gradient-to-br from-primary-accent/10 to-transparent border-primary-accent/30">
+            <div className="flex items-start justify-between mb-6">
+              <div>
+                <h3 className="text-xl font-bold text-white mb-1">Current Assignment</h3>
+                <p className="text-sm text-primary-accent">Sector 4 - Concourse D</p>
+              </div>
+              <span className="px-3 py-1 bg-success/20 text-success rounded-full text-xs font-bold uppercase tracking-wider flex items-center">
+                <span className="w-2 h-2 rounded-full bg-success mr-2 animate-pulse" />
+                Active Shift
+              </span>
             </div>
-          )}
-        </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-black/20"><Clock className="h-4 w-4 text-muted-text" /></div>
+                <div>
+                  <p className="text-xs text-muted-text">Shift Time</p>
+                  <p className="text-sm font-medium text-white">14:00 - 22:00</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-black/20"><MapPin className="h-4 w-4 text-muted-text" /></div>
+                <div>
+                  <p className="text-xs text-muted-text">Zone Supervisor</p>
+                  <p className="text-sm font-medium text-white">Sarah Jenkins</p>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6">
+            <h3 className="font-bold text-white mb-4">Task Checklist</h3>
+            <div className="space-y-3">
+              {[
+                { task: "Check-in at Volunteer HQ", done: true },
+                { task: "Collect Radio & Credentials", done: true },
+                { task: "Report to Sector 4 Post", done: true },
+                { task: "Assist with crowd flow during halftime", done: false },
+                { task: "Post-match sector sweep", done: false },
+              ].map((task, i) => (
+                <div key={i} className="flex items-center gap-3 p-3 rounded-lg border border-white/5 bg-white/5">
+                  <button className={`w-5 h-5 rounded flex items-center justify-center border ${task.done ? 'bg-success border-success' : 'border-white/20'}`}>
+                    {task.done && <CheckCircle className="h-4 w-4 text-black" />}
+                  </button>
+                  <span className={`text-sm ${task.done ? 'text-muted-text line-through' : 'text-white'}`}>{task.task}</span>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </motion.div>
+
+        <motion.div variants={item} className="space-y-6">
+          <Card className="p-6">
+            <h3 className="font-bold text-white mb-4 flex items-center"><Calendar className="h-4 w-4 mr-2 text-ai-accent"/> Upcoming Shifts</h3>
+            <div className="space-y-4">
+              {[
+                { date: "Oct 24", time: "10:00 - 18:00", event: "Group Stage Match 3" },
+                { date: "Oct 28", time: "14:00 - 22:00", event: "Quarter Finals" },
+              ].map((shift, i) => (
+                <div key={i} className="p-3 rounded-lg border border-white/5 bg-black/20">
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="font-medium text-white">{shift.date}</span>
+                    <span className="text-xs text-muted-text font-mono">{shift.time}</span>
+                  </div>
+                  <p className="text-xs text-muted-text">{shift.event}</p>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </motion.div>
       </div>
-
-      {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto hide-scrollbar pb-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
-          
-          {/* Left Column: Shift & Tasks */}
-          <div className={`lg:col-span-4 flex-col gap-6 ${activeTab === "tasks" ? "flex h-full" : "hidden lg:flex"}`}>
-            <div className="shrink-0">
-              <ShiftTrackingUI />
-            </div>
-            <div className="flex-1 min-h-[400px]">
-              <VolunteerTasks />
-            </div>
-          </div>
-
-          {/* Center Column: Map & Routing */}
-          <div className={`lg:col-span-5 flex-col gap-6 ${activeTab === "map" ? "flex h-full" : "hidden lg:flex"}`}>
-            <div className="flex-1 min-h-[400px]">
-              <VolunteerMap />
-            </div>
-            <div className="shrink-0 h-[250px]">
-              <SmartRoutingMap />
-            </div>
-          </div>
-
-          {/* Right Column: Incident Report */}
-          <div className={`lg:col-span-3 flex-col gap-6 ${activeTab === "report" ? "flex h-full" : "hidden lg:flex"}`}>
-            <IncidentReporter />
-          </div>
-
-        </div>
-      </div>
-
-      {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 h-16 bg-surface/90 backdrop-blur-lg border-t border-white/10 flex lg:hidden z-40 px-6 justify-between items-center pb-safe">
-        <button 
-          onClick={() => setActiveTab("tasks")}
-          className={`flex flex-col items-center gap-1 ${activeTab === 'tasks' ? 'text-primary-accent' : 'text-muted-text hover:text-white'}`}
-        >
-          <CheckCircle className="w-5 h-5" />
-          <span className="text-[10px] font-medium uppercase tracking-wider">Tasks</span>
-        </button>
-        <button 
-          onClick={() => setActiveTab("map")}
-          className={`flex flex-col items-center gap-1 ${activeTab === 'map' ? 'text-primary-accent' : 'text-muted-text hover:text-white'}`}
-        >
-          <Map className="w-5 h-5" />
-          <span className="text-[10px] font-medium uppercase tracking-wider">Map</span>
-        </button>
-        <button 
-          onClick={() => setActiveTab("report")}
-          className={`flex flex-col items-center gap-1 ${activeTab === 'report' ? 'text-primary-accent' : 'text-muted-text hover:text-white'}`}
-        >
-          <AlertTriangle className="w-5 h-5" />
-          <span className="text-[10px] font-medium uppercase tracking-wider">Report</span>
-        </button>
-      </div>
-
-      {/* Draggable Bottom Sheet AI Copilot */}
-      <VolunteerCopilot />
-    </div>
+    </motion.div>
   )
 }
