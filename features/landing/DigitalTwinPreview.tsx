@@ -17,7 +17,7 @@ export default function DigitalTwinPreview() {
   const [activeOverlay, setActiveOverlay] = React.useState("Crowd")
 
   return (
-    <div className="container mx-auto px-4 py-32 border-t border-white/10" id="technology">
+    <div className="container mx-auto px-4 py-32 border-t border-white/10" id="digital-twin-preview">
       <Slide direction="up">
         <SectionHeading 
           title="Digital Twin Preview" 

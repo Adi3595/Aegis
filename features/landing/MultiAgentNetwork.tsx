@@ -32,7 +32,7 @@ export default function MultiAgentNetwork() {
   }, [])
 
   return (
-    <div className="container mx-auto px-4 py-32 border-t border-white/10 overflow-hidden" id="technology">
+    <div className="container mx-auto px-4 py-32 border-t border-white/10 overflow-hidden" id="multi-agent-network">
       <Slide direction="up">
         <SectionHeading 
           title="Multi-Agent Network" 

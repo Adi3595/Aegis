@@ -22,7 +22,7 @@ export default function LiveSimulation() {
   const [activeScenario, setActiveScenario] = React.useState(SCENARIOS[0])
 
   return (
-    <div className="container mx-auto px-4 py-32 border-t border-white/10 bg-surface/20" id="simulation">
+    <div className="container mx-auto px-4 py-32 border-t border-white/10 bg-surface/20" id="simulation-details">
       <Slide direction="up">
         <SectionHeading 
           title="Live Threat Simulation" 

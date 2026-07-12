@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
+import Link from "next/link"
 import { Globe, Briefcase, Code } from "lucide-react"
 import { Logo } from "@/components/ui/logo"
 import { toast } from "@/store/toastStore"
@@ -68,18 +69,18 @@ export function Footer() {
 
           <div className="flex flex-col space-y-4 text-sm">
             <h4 className="font-display font-semibold text-white mb-2">Developers</h4>
-            <button onClick={() => toast.info("Documentation is being generated...")} className="text-left text-muted-text hover:text-primary-accent transition-colors">Documentation</button>
-            <a href="#technology" onClick={(e) => handleSmoothScroll(e, "#technology")} className="text-muted-text hover:text-primary-accent transition-colors">Technology Stack</a>
-            <button onClick={() => toast.info("API Reference is being generated...")} className="text-left text-muted-text hover:text-primary-accent transition-colors">API Reference</button>
+            <Link href="/docs" className="text-left text-muted-text hover:text-primary-accent transition-colors">Documentation</Link>
+            <a href="/#technology" onClick={(e) => handleSmoothScroll(e, "#technology")} className="text-muted-text hover:text-primary-accent transition-colors">Technology Stack</a>
+            <Link href="/docs" className="text-left text-muted-text hover:text-primary-accent transition-colors">API Reference</Link>
             <button onClick={() => toast.info("GitHub repository will be public soon!")} className="text-left text-muted-text hover:text-primary-accent transition-colors">GitHub Repository</button>
           </div>
 
           <div className="flex flex-col space-y-4 text-sm">
             <h4 className="font-display font-semibold text-white mb-2">Company</h4>
-            <button onClick={() => toast.info("About page is under construction.")} className="text-left text-muted-text hover:text-primary-accent transition-colors">About</button>
-            <button onClick={() => toast.info("Contact form is under construction.")} className="text-left text-muted-text hover:text-primary-accent transition-colors">Contact</button>
-            <button onClick={() => toast.info("Privacy Policy will be available soon.")} className="text-left text-muted-text hover:text-primary-accent transition-colors">Privacy Policy</button>
-            <button onClick={() => toast.info("Terms of Service will be available soon.")} className="text-left text-muted-text hover:text-primary-accent transition-colors">Terms of Service</button>
+            <Link href="/about" className="text-left text-muted-text hover:text-primary-accent transition-colors">About</Link>
+            <Link href="/contact" className="text-left text-muted-text hover:text-primary-accent transition-colors">Contact</Link>
+            <Link href="/privacy" className="text-left text-muted-text hover:text-primary-accent transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-left text-muted-text hover:text-primary-accent transition-colors">Terms of Service</Link>
           </div>
         </div>
 
