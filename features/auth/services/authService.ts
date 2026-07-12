@@ -53,6 +53,7 @@ export const authService = {
         email: data.email,
         name: data.name,
         password: data.password,
+        role: data.role,
       }),
     })
     
@@ -64,11 +65,14 @@ export const authService = {
     // Mock OAuth delay
     await new Promise((resolve) => setTimeout(resolve, 2000))
     
+    // For demo purposes, map different OAuth providers to different roles
+    const demoRole = provider === "google" ? "Organizer" : "Medical"
+
     return {
       id: `usr_oauth_${Math.floor(Math.random() * 1000)}`,
       email: `user@${provider}.com`,
       name: `${provider.charAt(0).toUpperCase() + provider.slice(1)} User`,
-      role: "Fan"
+      role: demoRole
     } as User
   },
 
