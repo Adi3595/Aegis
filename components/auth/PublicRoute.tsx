@@ -12,12 +12,12 @@ export function PublicRoute({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     setMounted(true)
-    if (isAuthenticated) {
+    if (isAuthenticated && user?.role) {
       router.replace("/dashboard")
     }
   }, [isAuthenticated, user, router])
 
-  if (!mounted || isAuthenticated) {
+  if (!mounted || (isAuthenticated && user?.role)) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-primary-bg">
         <Loader2 className="h-8 w-8 animate-spin text-ai-accent" />
