@@ -36,7 +36,6 @@ export const authService = {
       id: `usr_mock_${Math.floor(Math.random() * 1000)}`,
       email: data.email,
       name: data.email.split("@")[0],
-      role: "Pending" // Will be prompted to select persona
     } as User
   },
 
@@ -52,7 +51,6 @@ export const authService = {
       id: `usr_mock_${Math.floor(Math.random() * 1000)}`,
       email: data.email,
       name: data.name,
-      role: data.role
     } as User
   },
 
