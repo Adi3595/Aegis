@@ -111,15 +111,15 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile Backdrop */}
+      {/* Global Backdrop (Desktop & Mobile) */}
       <AnimatePresence>
-        {sidebarOpen && isMobile && (
+        {sidebarOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSidebar(false)}
-            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-primary-bg/70 backdrop-blur-md"
           />
         )}
       </AnimatePresence>
@@ -127,13 +127,12 @@ export function Sidebar() {
       <motion.aside
         initial={false}
         animate={{ 
-          width: sidebarOpen ? 260 : 72,
-          x: !sidebarOpen && isMobile ? -72 : 0
+          width: 260,
+          x: sidebarOpen ? 0 : -260
         }}
         transition={{ type: "spring", bounce: 0, duration: 0.4 }}
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex h-full flex-col border-r border-white/5 bg-surface/50 backdrop-blur-xl lg:static lg:z-0",
-          !sidebarOpen && isMobile && "-translate-x-full"
+          "fixed inset-y-0 left-0 z-50 flex h-full flex-col border-r border-white/5 bg-surface/80 backdrop-blur-3xl shadow-2xl"
         )}
       >
         <div className="flex h-16 shrink-0 items-center justify-between px-4">
@@ -152,9 +151,9 @@ export function Sidebar() {
           
           <button
             onClick={toggleSidebar}
-            className="hidden lg:flex rounded-md p-1.5 text-muted-text hover:bg-white/10 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary-accent"
+            className="flex rounded-md p-1.5 text-muted-text hover:bg-white/10 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary-accent"
           >
-            {sidebarOpen ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+            <ChevronLeft className="h-5 w-5" />
           </button>
         </div>
 
@@ -221,18 +220,9 @@ export function Sidebar() {
                 title={!sidebarOpen ? "Log Out" : undefined}
               >
                 <LogOut className="h-5 w-5 shrink-0 transition-colors text-muted-text group-hover:text-error" />
-                <AnimatePresence>
-                  {sidebarOpen && (
-                    <motion.span
-                      initial={{ opacity: 0, width: 0 }}
-                      animate={{ opacity: 1, width: "auto" }}
-                      exit={{ opacity: 0, width: 0 }}
-                      className="ml-3 truncate"
-                    >
-                      Log Out
-                    </motion.span>
-                  )}
-                </AnimatePresence>
+                <span className="ml-3 truncate">
+                  Log Out
+                </span>
               </button>
             </div>
           </nav>
@@ -260,21 +250,11 @@ function NavItem({ item, isActive, sidebarOpen, danger = false }: any) {
         "h-5 w-5 shrink-0 transition-colors",
         isActive ? (danger ? "text-error" : "text-primary-accent") : "text-muted-text group-hover:text-white"
       )} />
-      
-      <AnimatePresence>
-        {sidebarOpen && (
-          <motion.span
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 1, width: "auto" }}
-            exit={{ opacity: 0, width: 0 }}
-            className="ml-3 truncate"
-          >
-            {item.name}
-          </motion.span>
-        )}
-      </AnimatePresence>
+      <span className="ml-3 truncate">
+        {item.name}
+      </span>
 
-      {sidebarOpen && item.badge && (
+      {item.badge && (
         <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-ai-accent text-[10px] font-bold text-white">
           {item.badge}
         </span>

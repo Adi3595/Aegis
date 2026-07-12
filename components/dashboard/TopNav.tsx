@@ -21,7 +21,7 @@ export function TopNav() {
         <button 
           onClick={toggleSidebar}
           aria-label="Toggle Navigation Sidebar"
-          className="rounded-md p-2 text-muted-text hover:bg-white/5 hover:text-white transition-colors lg:hidden"
+          className="rounded-md p-2 text-muted-text hover:bg-white/5 hover:text-white transition-colors flex shrink-0"
         >
           <Menu className="h-5 w-5" />
         </button>

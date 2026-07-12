@@ -27,7 +27,7 @@ interface LayoutState {
 export const useLayoutStore = create<LayoutState>()(
   persist(
     (set) => ({
-      sidebarOpen: true,
+      sidebarOpen: false,
       rightPanelOpen: false,
       notificationCenterOpen: false,
       commandPaletteOpen: false,
