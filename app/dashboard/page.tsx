@@ -6,9 +6,10 @@ import { useAuthStore } from "@/features/auth/store/authStore"
 
 export default function DashboardIndexPage() {
   const router = useRouter()
-  const { user, role } = useAuthStore()
+  const { user } = useAuthStore()
 
   useEffect(() => {
+    const role = user?.role
     if (user && role) {
       if (role === "Fan") router.replace("/dashboard/fan")
       else if (role === "Volunteer") router.replace("/dashboard/volunteer")
@@ -18,7 +19,7 @@ export default function DashboardIndexPage() {
     } else {
       router.replace("/login")
     }
-  }, [user, role, router])
+  }, [user, router])
 
   return null
 }
