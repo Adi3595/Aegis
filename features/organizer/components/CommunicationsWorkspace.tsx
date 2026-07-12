@@ -38,7 +38,7 @@ export function CommunicationsWorkspace() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Draft emergency or informational broadcast..."
-            className="flex-1 bg-surface border border-white/10 rounded-xl p-4 text-white resize-none focus:outline-none focus:border-primary-accent transition-colors"
+            className="flex-1 panel-solid p-4 text-white resize-none focus:outline-none focus:border-primary-accent transition-colors"
           />
 
           <div className="flex flex-col sm:flex-row gap-3">

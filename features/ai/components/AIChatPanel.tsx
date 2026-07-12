@@ -150,7 +150,7 @@ export function AIChatPanel() {
             onChange={(e) => setInput(e.target.value)}
             disabled={isGenerating}
             placeholder="Ask AI Orchestrator..."
-            className="w-full bg-surface border border-white/10 rounded-xl pl-4 pr-12 py-3 text-sm text-white focus:outline-none focus:border-ai-accent transition-colors disabled:opacity-50"
+            className="w-full panel-solid pl-4 pr-12 py-3 text-sm text-white focus:outline-none focus:border-ai-accent transition-colors disabled:opacity-50"
           />
           <Button 
             type="submit" 

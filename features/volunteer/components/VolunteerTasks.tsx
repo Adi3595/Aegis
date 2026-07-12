@@ -65,7 +65,7 @@ export function VolunteerTasks() {
             <p className="text-sm text-muted-text text-center mt-4">Queue is empty.</p>
           ) : (
             pendingTasks.map(task => (
-              <div key={task.id} className="p-4 bg-surface border border-white/5 rounded-xl flex flex-col sm:flex-row gap-4 sm:items-center justify-between group hover:border-white/20 transition-colors">
+              <div key={task.id} className="p-4 panel-solid flex flex-col sm:flex-row gap-4 sm:items-center justify-between group hover:border-white/20 transition-colors">
                 <div>
                   <h4 className="font-semibold text-white text-sm mb-1">{task.title}</h4>
                   <div className="flex gap-3 text-xs text-muted-text">

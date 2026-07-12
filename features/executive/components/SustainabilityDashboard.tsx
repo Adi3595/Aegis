@@ -108,7 +108,7 @@ export function SustainabilityDashboard() {
               <h3 className="font-semibold text-white">AI Efficiency Recommendations</h3>
             </div>
             <ul className="space-y-4">
-              <li className="bg-surface/50 border border-white/10 p-4 rounded-xl">
+              <li className="panel-glass p-4 rounded-xl">
                 <div className="flex items-start gap-3">
                   <AlertCircle className="w-4 h-4 text-warning mt-0.5 shrink-0" />
                   <div>
@@ -117,7 +117,7 @@ export function SustainabilityDashboard() {
                   </div>
                 </div>
               </li>
-              <li className="bg-surface/50 border border-white/10 p-4 rounded-xl">
+              <li className="panel-glass p-4 rounded-xl">
                 <div className="flex items-start gap-3">
                   <AlertCircle className="w-4 h-4 text-ai-accent mt-0.5 shrink-0" />
                   <div>

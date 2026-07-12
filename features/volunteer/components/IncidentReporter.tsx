@@ -51,7 +51,7 @@ export function IncidentReporter() {
           <select 
             value={category} 
             onChange={e => setCategory(e.target.value)}
-            className="w-full bg-surface border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-ai-accent"
+            className="w-full panel-solid p-3 text-sm text-white focus:outline-none focus:border-ai-accent"
           >
             {["Crowd", "Medical", "Security", "Infrastructure", "Lost Child", "Accessibility", "Cleanliness"].map(c => (
               <option key={c} value={c}>{c}</option>
@@ -64,7 +64,7 @@ export function IncidentReporter() {
           <select 
             value={zoneId} 
             onChange={e => setZoneId(e.target.value)}
-            className="w-full bg-surface border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-ai-accent"
+            className="w-full panel-solid p-3 text-sm text-white focus:outline-none focus:border-ai-accent"
           >
             {["gate-north", "gate-south", "gate-east", "gate-west", "food-court-a", "medical-center", "pitch"].map(z => (
               <option key={z} value={z}>{z}</option>
@@ -78,7 +78,7 @@ export function IncidentReporter() {
             value={description}
             onChange={e => setDescription(e.target.value)}
             rows={4}
-            className="w-full bg-surface border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-ai-accent resize-none"
+            className="w-full panel-solid p-3 text-sm text-white focus:outline-none focus:border-ai-accent resize-none"
             placeholder="Describe the situation..."
           />
           <div className="flex justify-end mt-2">

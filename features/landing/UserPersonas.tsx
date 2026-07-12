@@ -37,7 +37,7 @@ export default function UserPersonas() {
               className="group cursor-pointer h-full"
             >
               <GlassPanel className={`h-full flex flex-col p-6 transition-all duration-500 ${persona.glow} border-white/5 group-hover:border-white/20 group-hover:bg-white/10`}>
-                <div className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-surface/50 border border-white/10 ${persona.color} transition-transform duration-300 group-hover:scale-110`}>
+                <div className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl panel-glass ${persona.color} transition-transform duration-300 group-hover:scale-110`}>
                   <Icon className="h-7 w-7" />
                 </div>
                 <h3 className="font-display text-2xl font-bold text-white mb-2">{persona.role}</h3>

@@ -40,7 +40,7 @@ export function AIInsightsWorkspace() {
         <GlassPanel className="p-6 flex-1 bg-white/[0.01]">
           <h3 className="font-semibold text-white mb-6">Predictive Scenario Analysis</h3>
           <div className="space-y-4">
-            <div className="p-4 rounded-xl bg-surface border border-white/5 relative overflow-hidden group">
+            <div className="p-4 panel-solid relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-3">
                 <Target className="w-4 h-4 text-warning opacity-50" />
               </div>
@@ -54,7 +54,7 @@ export function AIInsightsWorkspace() {
               </div>
             </div>
             
-            <div className="p-4 rounded-xl bg-surface border border-white/5 relative overflow-hidden group">
+            <div className="p-4 panel-solid relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-3">
                 <Shield className="w-4 h-4 text-error opacity-50" />
               </div>

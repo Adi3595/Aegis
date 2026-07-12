@@ -32,7 +32,7 @@ export function EmergencyPlaybooks() {
           <button
             key={pb.id}
             onClick={() => handleOpenPlaybook(pb.title)}
-            className="flex items-center justify-between p-3 rounded-xl bg-surface border border-white/5 hover:bg-white/5 hover:border-white/20 transition-all text-left group"
+            className="flex items-center justify-between p-3 panel-solid hover:bg-white/5 hover:border-white/20 transition-all text-left group"
           >
             <div className="flex items-center gap-3">
               <FileText className="w-4 h-4 text-muted-text group-hover:text-ai-accent transition-colors" />

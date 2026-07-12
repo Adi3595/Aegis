@@ -32,7 +32,7 @@ export function ResponseTeamManager() {
           const colorClass = colorMap[team.type]
           
           return (
-            <div key={team.id} className="p-3 bg-surface border border-white/5 rounded-xl flex items-center justify-between">
+            <div key={team.id} className="p-3 panel-solid flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className={`p-2 rounded-lg border ${colorClass}`}>
                   <Icon className="w-4 h-4" />

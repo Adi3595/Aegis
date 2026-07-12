@@ -13,14 +13,14 @@ export function ResponderCommunications() {
       </div>
       <div className="flex-1 flex flex-col p-4 gap-4">
         <div className="flex-1 space-y-3 overflow-y-auto hide-scrollbar">
-          <div className="p-3 bg-surface border border-white/5 rounded-xl">
+          <div className="p-3 panel-solid">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-xs font-bold text-blue-400">SEC-ALPHA</span>
               <span className="text-[10px] text-muted-text font-mono">14:02:10</span>
             </div>
             <p className="text-sm text-white">Proceeding to Gate North. ETA 2 mins.</p>
           </div>
-          <div className="p-3 bg-surface border border-white/5 rounded-xl">
+          <div className="p-3 panel-solid">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-xs font-bold text-green-400">MED-BRAVO</span>
               <span className="text-[10px] text-muted-text font-mono">14:03:45</span>

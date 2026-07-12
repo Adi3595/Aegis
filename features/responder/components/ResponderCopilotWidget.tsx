@@ -48,7 +48,7 @@ export function ResponderCopilotWidget() {
             </div>
           </div>
 
-          <div className="bg-surface/50 border border-white/10 rounded-xl p-4 backdrop-blur-md">
+          <div className="panel-glass rounded-xl p-4 backdrop-blur-md">
             <h5 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-success" /> Recommended Actions
             </h5>
