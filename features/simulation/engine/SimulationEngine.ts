@@ -16,7 +16,7 @@ class SimulationEngine {
   }
 
   private get apiUrl() {
-    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1"
+    return process.env.NEXT_PUBLIC_API_URL || "https://aegis-backend-qlx8.onrender.com/api/v1"
   }
 
   public async start() {

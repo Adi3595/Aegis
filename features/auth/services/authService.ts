@@ -2,7 +2,7 @@ import { LoginFormData, RegisterFormData, ForgotPasswordFormData, ResetPasswordF
 import { User } from "../store/authStore"
 import { toast } from "@/store/toastStore"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1"
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://aegis-backend-qlx8.onrender.com/api/v1"
 
 // Helper to handle API responses
 async function fetchAPI(endpoint: string, options: RequestInit = {}) {

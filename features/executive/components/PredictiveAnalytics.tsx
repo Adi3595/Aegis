@@ -16,11 +16,11 @@ export function PredictiveAnalytics() {
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        const histRes = await fetch(`http://localhost:8000/api/v1/analytics/historical?scenario=${encodeURIComponent(activeScenario)}&duration_minutes=90`)
+        const histRes = await fetch(`https://aegis-backend-qlx8.onrender.com/api/v1/analytics/historical?scenario=${encodeURIComponent(activeScenario)}&duration_minutes=90`)
         const histJson = await histRes.json()
         setHistoricalData(histJson.data)
 
-        const predRes = await fetch(`http://localhost:8000/api/v1/analytics/predictions?scenario=${encodeURIComponent(activeScenario)}&current_minute=90`)
+        const predRes = await fetch(`https://aegis-backend-qlx8.onrender.com/api/v1/analytics/predictions?scenario=${encodeURIComponent(activeScenario)}&current_minute=90`)
         const predJson = await predRes.json()
         setPredictiveData(predJson.predictions)
       } catch (err) {

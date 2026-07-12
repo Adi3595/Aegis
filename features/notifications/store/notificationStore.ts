@@ -46,7 +46,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
         }))
 
         // Call our translation API
-        fetch("http://localhost:8000/api/v1/ai/translate", {
+        fetch("https://aegis-backend-qlx8.onrender.com/api/v1/ai/translate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: notif.message, target_language: language })

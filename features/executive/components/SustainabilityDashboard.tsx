@@ -15,7 +15,7 @@ export function SustainabilityDashboard() {
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        const res = await fetch(`http://localhost:8000/api/v1/analytics/historical?scenario=${encodeURIComponent(activeScenario)}&duration_minutes=90`)
+        const res = await fetch(`https://aegis-backend-qlx8.onrender.com/api/v1/analytics/historical?scenario=${encodeURIComponent(activeScenario)}&duration_minutes=90`)
         const json = await res.json()
         setData(json.data)
       } catch (err) {

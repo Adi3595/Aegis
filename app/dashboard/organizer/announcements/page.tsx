@@ -22,7 +22,7 @@ export default function AnnouncementsPage() {
   const handleTranslatePreview = async () => {
     setIsTranslating(true)
     try {
-      const res = await fetch("http://localhost:8000/api/v1/ai/translate", {
+      const res = await fetch("https://aegis-backend-qlx8.onrender.com/api/v1/ai/translate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: message, target_language: targetLang })
@@ -39,7 +39,7 @@ export default function AnnouncementsPage() {
   const handleBroadcast = async () => {
     setIsSending(true)
     try {
-      await fetch("http://localhost:8000/api/v1/notifications/broadcast", {
+      await fetch("https://aegis-backend-qlx8.onrender.com/api/v1/notifications/broadcast", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -13,7 +13,7 @@ class WebSocketService {
     if (this.ws?.readyState === WebSocket.OPEN || this.isConnecting) return
 
     this.isConnecting = true
-    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || process.env.NEXT_PUBLIC_API_URL?.replace("http", "ws") || "ws://localhost:8000/api/v1"
+    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || process.env.NEXT_PUBLIC_API_URL?.replace("http", "ws") || "wss://aegis-backend-qlx8.onrender.com/api/v1"
     
     try {
       const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : null
