@@ -1,124 +1,82 @@
 <div align="center">
-  <img src="public/logo.svg" alt="AEGIS Logo" width="120" />
-  <h1 align="center">AEGIS : Operational Intelligence Platform</h1>
+  <h1 align="center">AEGIS | Stadium Intelligence Platform</h1>
   <p align="center">
-    <strong>Mission-critical stadium management powered by Digital Twins and Multi-Agent Systems.</strong>
+    <strong>Mission-critical stadium management powered by Digital Twins, 3D visualization, and Multi-Agent Systems.</strong>
   </p>
   
   <p align="center">
-    <a href="#-problem-statement">Problem</a> •
-    <a href="#-solution-overview">Solution</a> •
-    <a href="#-key-features">Features</a> •
-    <a href="#-architecture">Architecture</a> •
-    <a href="#-quick-start">Quick Start</a>
-  </p>
-  
-  <p align="center">
-    <a href="https://github.com/Adi3595/Aegis"><img src="https://img.shields.io/badge/Live_Demo-View_Dashboard-5B8CFF?style=for-the-badge" alt="Live Demo" /></a>
+    <a href="https://aegis-five-umber.vercel.app"><img src="https://img.shields.io/badge/Live_Demo-View_Platform-10B981?style=for-the-badge" alt="Live Demo" /></a>
   </p>
 
   <p align="center">
-    <img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js" alt="Next.js" />
-    <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
-    <img src="https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
-    <img src="https://img.shields.io/badge/Vercel-Deployed-black?style=flat-square&logo=vercel" alt="Vercel" />
-    <img src="https://img.shields.io/badge/Render-Deployed-000000?style=flat-square&logo=render" alt="Render" />
+    <img src="https://img.shields.io/badge/Next.js-16_Turbopack-black?style=flat-square&logo=next.js" alt="Next.js" />
+    <img src="https://img.shields.io/badge/React_Three_Fiber-3D-000000?style=flat-square" alt="R3F" />
+    <img src="https://img.shields.io/badge/TailwindCSS-Tactical_Theme-38B2AC?style=flat-square&logo=tailwind-css" alt="TailwindCSS" />
+    <img src="https://img.shields.io/badge/Zustand-State-informational?style=flat-square" alt="Zustand" />
   </p>
 </div>
 
 ---
 
-## 🎯 Problem Statement
-Managing large-scale sporting events involves hundreds of disconnected systems, unpredictable crowd behavior, and isolated teams (medical, security, organizers). When an incident occurs, delayed communication and fragmented data can lead to catastrophic failures.
+## 🎯 About The Project
+AEGIS is a unified, real-time command center designed for managing large-scale sporting events. Built with a focus on immersive design and operational efficiency, it combines a live **3D Digital Twin** with a **Tactical User Interface** to give stakeholders a comprehensive, god's-eye view of stadium operations. 
 
-## 💡 Solution Overview
-**AEGIS** provides a unified, real-time command center. By combining a **deterministic physics simulation engine** with a live **3D Digital Twin**, it gives stakeholders a comprehensive, god's-eye view of the stadium. A **multi-agent orchestration network** continuously analyzes this data to predict bottlenecks, suggest optimal resource deployment, and automatically coordinate cross-functional teams.
+From crowd density and incident tracking to intelligent resource deployment, AEGIS ensures all isolated teams (medical, security, organizers) are coordinated in real-time.
 
-## ✨ Key Features
+## ✨ Core Features
 
-<details open>
-<summary><strong>🎮 Interactive Digital Twin & 3D Terrain</strong></summary>
-A fully interactive, Three.js-powered 3D spatial mapping of the stadium that tracks crowd density, heatmaps, and active incidents broadcasted over real-time WebSockets.
-</details>
+### 🏟️ Interactive 3D Digital Twin
+A fully interactive, multi-tier oval stadium built using `@react-three/fiber` and `@react-three/drei`. Features include a dynamic pitch, multi-tier seating bowls, canopy roofing, and tactical ambient lighting. It serves as the visual centerpiece for spatial mapping and telemetry.
 
-<details open>
-<summary><strong>🎭 Unified Persona Login Grid</strong></summary>
-Instantly switch between roles (Executive, Organizer, Security, Medical, Volunteer, Fan) using our mock Persona authentication system to test role-based access control.
-</details>
+### 🎨 Tactical UI & Immersive Theme
+Designed with a premium "Military Tactical" aesthetic. Utilizes a strict color palette of **Stealth Green (Seafoam)**, **Amber (Warning)**, **Red (Error)**, and **Carbon Black**. It features glassmorphism, animated mesh gradients, and micro-interactions powered by Framer Motion.
 
-<details open>
-<summary><strong>🧠 Multi-Agent Orchestration</strong></summary>
-Context-aware orchestration for real-time operational advice, featuring an interactive Multi-Agent Network node visualization and Explainability Panel.
-</details>
+### 🎭 Persona-Based Authentication
+A seamless authentication flow that bypasses traditional backends using a mock **Persona Grid**. Users can instantly adopt specific roles (Executive, Organizer, Security, Medical, Volunteer, Fan) to test role-based access control. Also includes a Google OAuth visual bypass for frictionless entry.
 
-<details open>
-<summary><strong>📱 Dedicated Sub-Dashboards</strong></summary>
-Tailored UI modules for Analytics, Reports, Settings, Support, and Live Telemetry customized to the specific clearance level of the user.
-</details>
+### 📱 Dedicated Role Dashboards
+Six distinct, clearance-level specific dashboards:
+- 🚨 **Security (Level 3)**: Incident triage, crowd density monitoring, rapid response.
+- 📋 **Organizer (Level 4)**: Global overview, AI Insights, Live Operations, Sustainability.
+- 📈 **Executive (Level 5)**: High-level KPIs, predictive analytics, revenue metrics.
+- 🏟️ **Fan (Level 1)**: Wayfinding, match updates.
+- 🙋 **Volunteer (Level 2)**: Task management, local reporting.
+- ⚕️ **Medical (Level 3)**: Emergency dispatches.
 
-## 👥 Supported User Roles
-| Persona | Access Clearance | Primary Dashboard Focus |
-|---|---|---|
-| 🏟️ **Fan** | Level 1 | Navigation, match updates, multilingual support, offline capabilities |
-| 🙋 **Volunteer** | Level 2 | Task management, local zone reporting, offline support |
-| 🚨 **Security** | Level 3 | Incident triage, live queue monitoring, rapid response |
-| ⚕️ **Medical** | Level 3 | Emergency dispatches, triage queues, resource tracking |
-| 📋 **Organizer** | Level 4 | Global overview, resource dispatch, timeline management |
-| 📈 **Executive** | Level 5 | High-level KPIs, predictive analytics, sustainability metrics |
-
-## 🏗 Architecture
-
-```mermaid
-graph TD
-    subgraph Frontend [Next.js Web Application]
-        UI[React 19 / Framer Motion]
-        Z[Zustand State]
-        Three[Three.js Digital Twin]
-    end
-
-    subgraph Backend [FastAPI Server]
-        API[REST APIs]
-        WS[WebSocket Manager]
-        SIM[Physics Simulation Engine]
-        MA[Multi-Agent Orchestrator]
-    end
-
-    UI --> Z
-    UI --> Three
-    Z <-->|HTTP/WS| API
-    Three <-->|Real-time Data| WS
-    API --- SIM
-    API --- MA
-```
+### 📶 Offline-First Capabilities (PWA)
+Engineered for reliability during high-density network congestion (typical in stadiums). Includes a registered Service Worker (`sw.js`), Web App Manifest, and a dedicated offline fallback page ensuring critical information remains accessible even when connectivity drops.
 
 ## 🚀 Quick Start
 
-### 🌍 Cloud Deployment (Active)
-The project is already live and fully configured!
-- **Frontend**: Deployed on Vercel
-- **Backend API**: Deployed on Render (`https://aegis-backend-qlx8.onrender.com`)
+### 🌍 Live Deployment
+The project is continuously deployed on Vercel:
+👉 **[Access the Platform](https://aegis-five-umber.vercel.app)**
 
-### 💻 Local Native Development
+### 💻 Local Development
 
-**1. Clone & Install**
+**1. Clone the Repository**
 ```bash
 git clone https://github.com/Adi3595/Aegis.git
 cd Aegis
+```
+
+**2. Install Dependencies**
+```bash
 npm install
 ```
 
-**2. Configure Environment**
-Create a `.env.local` file in the root directory:
-```env
-NEXT_PUBLIC_API_URL=https://aegis-backend-qlx8.onrender.com/api/v1
-NEXT_PUBLIC_WS_URL=wss://aegis-backend-qlx8.onrender.com/api/v1
-```
-
-**3. Run the Frontend**
+**3. Run the Development Server**
 ```bash
 npm run dev
 ```
-Access the application at `http://localhost:3000`.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
+
+## 🏗 Architecture
+- **Framework**: Next.js 16 (App Router) with Turbopack.
+- **Styling**: TailwindCSS with custom CSS variables (`globals.css`).
+- **3D Rendering**: React, Three.js, React Three Fiber.
+- **State Management**: Zustand (Auth, Simulation, and Organizer stores).
+- **Animations**: Framer Motion & CSS keyframes.
 
 ## 📄 License
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the MIT License.
