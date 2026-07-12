@@ -44,12 +44,7 @@ export default function RegisterPage() {
 
   return (
     <PublicRoute>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full"
-      >
+      <div className="w-full">
         <div className="mb-8">
           <h1 className="font-display text-3xl font-bold text-white mb-2 tracking-tight">Request Access</h1>
           <p className="text-muted-text">Create an identity to enter the platform.</p>
@@ -147,7 +142,7 @@ export default function RegisterPage() {
             Initialize Session
           </Link>
         </div>
-      </motion.div>
+      </div>
     </PublicRoute>
   )
 }

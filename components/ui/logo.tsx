@@ -11,12 +11,12 @@ export function Logo({ className }: { className?: string }) {
     >
       <defs>
         <linearGradient id="aegis-grad" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#5B8CFF" />
-          <stop offset="100%" stopColor="#7C5CFF" />
+          <stop offset="0%" stopColor="#10B981" />
+          <stop offset="100%" stopColor="#34D399" />
         </linearGradient>
         <linearGradient id="aegis-grad-2" x1="200" y1="0" x2="0" y2="200" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#32D4FF" />
-          <stop offset="100%" stopColor="#5B8CFF" />
+          <stop offset="0%" stopColor="#F59E0B" />
+          <stop offset="100%" stopColor="#10B981" />
         </linearGradient>
       </defs>
       
@@ -40,12 +40,12 @@ export function Logo({ className }: { className?: string }) {
       />
       
       {/* Center Intelligence Node */}
-      <circle cx="100" cy="80" r="10" fill="#040814" stroke="#32D4FF" strokeWidth="4" />
+      <circle cx="100" cy="80" r="10" fill="#0A0A0A" stroke="#F59E0B" strokeWidth="4" />
       
       {/* Peripheral Data Nodes */}
-      <circle cx="55" cy="140" r="5" fill="#7C5CFF" />
-      <circle cx="145" cy="140" r="5" fill="#7C5CFF" />
-      <circle cx="100" cy="15" r="4" fill="#5B8CFF" />
+      <circle cx="55" cy="140" r="5" fill="#34D399" />
+      <circle cx="145" cy="140" r="5" fill="#34D399" />
+      <circle cx="100" cy="15" r="4" fill="#10B981" />
     </svg>
   )
 }

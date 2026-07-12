@@ -4,6 +4,7 @@ import * as React from "react"
 import { motion } from "framer-motion"
 import { Shield } from "lucide-react"
 import Link from "next/link"
+import { Logo } from "@/components/ui/logo"
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,9 +13,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       <div className="flex w-full flex-col justify-between overflow-y-auto lg:w-1/2 p-8 lg:p-12 relative z-10 bg-primary-bg">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-accent to-ai-accent text-primary-bg shadow-lg group-hover:scale-105 transition-transform">
-              <Shield className="h-5 w-5" />
-            </div>
+            <Logo className="h-10 w-auto group-hover:scale-105 transition-transform" />
             <span className="font-display text-xl font-bold tracking-tighter text-white">
               AEGIS
             </span>
