@@ -1,12 +1,15 @@
 "use client"
 
 import * as React from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
+import { usePathname } from "next/navigation"
 import { Shield } from "lucide-react"
 import Link from "next/link"
 import { Logo } from "@/components/ui/logo"
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+
   return (
     <div className="fixed inset-0 z-[100] flex min-h-screen bg-primary-bg">
       {/* Left side: Form content */}
@@ -24,9 +27,20 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </div>
         </div>
 
-        <div className="flex flex-1 items-center justify-center py-12">
-          <div className="w-full max-w-md">
-            {children}
+        <div className="flex flex-1 items-center justify-center py-12 relative overflow-hidden">
+          <div className="w-full max-w-md relative">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={pathname}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="w-full"
+              >
+                {children}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
