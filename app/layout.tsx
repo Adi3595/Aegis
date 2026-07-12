@@ -41,31 +41,32 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: "AEGIS AI | Stadium Intelligence Platform",
-  description: "The autonomous intelligence operating system for modern mega-events. Powering FIFA World Cup 2026 with real-time digital twins and multi-agent Generative AI.",
-  keywords: ["AI", "Stadium", "Intelligence", "Digital Twin", "FIFA 2026", "Generative AI", "Smart Venue"],
-  authors: [{ name: "AEGIS Systems" }],
-  creator: "AEGIS AI",
+  title: "AEGIS | Stadium Intelligence Platform",
+  description: "Next-generation stadium management and crowd intelligence platform powering live events.",
+  keywords: ["stadium", "intelligence", "crowd control", "events", "management", "predictive"],
+  authors: [{ name: "AEGIS Team" }],
+  creator: "AEGIS",
+  themeColor: "#040814",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://aegis-ai.dev",
-    title: "AEGIS AI | Stadium Intelligence Platform",
-    description: "The autonomous intelligence operating system for modern mega-events.",
-    siteName: "AEGIS AI",
+    url: "https://aegis-intelligence.vercel.app",
+    title: "AEGIS | Stadium Intelligence Platform",
+    description: "Next-generation stadium management and crowd intelligence platform powering live events.",
+    siteName: "AEGIS",
     images: [
       {
-        url: "/og-image.jpg", // Placeholder for actual OG image
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "AEGIS AI Dashboard Preview",
-      }
-    ]
+        alt: "AEGIS Dashboard Preview",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AEGIS AI | Stadium Intelligence Platform",
-    description: "Powering FIFA World Cup 2026 with autonomous AI agents.",
+    title: "AEGIS | Stadium Intelligence Platform",
+    description: "Next-generation stadium management and crowd intelligence platform powering live events.",
     creator: "@aegis_ai",
     images: ["/og-image.jpg"],
   },
