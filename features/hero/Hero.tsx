@@ -32,8 +32,17 @@ export function Hero() {
         transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
       />
 
-      <HeroContent />
-      <ScrollIndicator />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 3.5, duration: 1 }}
+        className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none"
+      >
+        <div className="pointer-events-auto w-full">
+          <HeroContent />
+        </div>
+        <ScrollIndicator />
+      </motion.div>
     </section>
   )
 }
