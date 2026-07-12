@@ -3,17 +3,13 @@
 import * as React from "react"
 import { motion } from "framer-motion"
 import { SectionHeading } from "@/components/ui/section-heading"
-import { Navbar } from "@/components/layout/navbar"
-import { Footer } from "@/components/layout/footer"
 import { Card } from "@/components/ui/card"
 import { Code, BookOpen, Terminal, ShieldAlert } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function DocsPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-primary-bg">
-      <Navbar />
-      <main className="flex-1 w-full pt-32 pb-20">
+    <div className="flex min-h-screen flex-col bg-primary-bg">      <main className="flex-1 w-full pt-32 pb-20">
         <motion.div 
           className="container mx-auto px-4 max-w-5xl"
           initial={{ opacity: 0, y: 20 }}
@@ -63,8 +59,6 @@ export default function DocsPage() {
             </Card>
           </div>
         </motion.div>
-      </main>
-      <Footer />
-    </div>
+      </main>    </div>
   )
 }
