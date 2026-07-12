@@ -85,9 +85,9 @@ function StadiumGeometry() {
 
   return (
     <group position={[0, -2, 0]}>
-      {/* Field */}
+      {/* Rectangular Field (Long axis along Z) */}
       <mesh position={[0, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[32, 22]} />
+        <planeGeometry args={[28, 44]} />
         <meshStandardMaterial 
           color="#062F20" 
           roughness={0.9}
@@ -95,43 +95,56 @@ function StadiumGeometry() {
         />
       </mesh>
 
-      {/* Stadium Bowl / Stands (Layered Torus geometries) */}
-      {[...Array(6)].map((_, i) => (
-        <mesh 
-          key={i} 
-          position={[0, i * 1.5, 0]} 
-          rotation={[-Math.PI / 2, 0, 0]}
-          material={materials[i % 2]}
-        >
-          <torusGeometry args={[19 + i * 2.8, 1.5, 16, 64]} />
-        </mesh>
-      ))}
+      {/* Center Circle and Lines */}
+      <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[4, 4.2, 32]} />
+        <meshBasicMaterial color="#10B981" transparent opacity={0.4} />
+      </mesh>
+      <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[28, 0.2]} />
+        <meshBasicMaterial color="#10B981" transparent opacity={0.4} />
+      </mesh>
+      {/* Field Boundary */}
+      <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[28, 44]} />
+        <meshBasicMaterial color="#10B981" transparent opacity={0.3} wireframe />
+      </mesh>
 
-      {/* Glowing Inner Ring */}
-      <mesh position={[0, 0.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[17, 0.1, 16, 100]} />
-        <meshBasicMaterial color="#10B981" />
+      {/* --- OVAL STADIUM BOWL --- */}
+      {/* Lower Tier */}
+      <mesh position={[0, 3, 0]} scale={[1, 1, 1.4]}>
+        <cylinderGeometry args={[25, 16, 6, 64, 1, true]} />
+        <meshStandardMaterial color="#171717" side={THREE.DoubleSide} roughness={0.8} />
       </mesh>
       
-      {/* Tactical Outer Ring */}
-      <mesh position={[0, 8, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[35, 0.05, 16, 100]} />
-        <meshBasicMaterial color="#F59E0B" />
+      {/* Club Level / Mid Tier */}
+      <mesh position={[0, 6.5, 0]} scale={[1, 1, 1.4]}>
+        <cylinderGeometry args={[26, 25, 1, 64, 1, true]} />
+        <meshStandardMaterial color="#0A0A0A" side={THREE.DoubleSide} />
       </mesh>
 
-      {/* Field Lines (Simple geometries on top of field) */}
-      <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[4, 4.1, 32]} />
-        <meshBasicMaterial color="#10B981" transparent opacity={0.4} />
+      {/* Upper Tier */}
+      <mesh position={[0, 10, 0]} scale={[1, 1, 1.4]}>
+        <cylinderGeometry args={[35, 26, 6, 64, 1, true]} />
+        <meshStandardMaterial color="#171717" side={THREE.DoubleSide} roughness={0.9} />
       </mesh>
-      <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[0.1, 22]} />
-        <meshBasicMaterial color="#10B981" transparent opacity={0.4} />
+
+      {/* Canopy Roof overhang */}
+      <mesh position={[0, 14, 0]} scale={[1, 1, 1.4]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[28, 38, 64]} />
+        <meshStandardMaterial color="#10B981" side={THREE.DoubleSide} transparent opacity={0.2} metalness={0.8} roughness={0.1} />
       </mesh>
-      {/* Outer Field Boundary */}
-      <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[15.8, 16, 64]} />
-        <meshBasicMaterial color="#10B981" transparent opacity={0.2} />
+      
+      {/* Outer Structural Rim / Facade Ring */}
+      <mesh position={[0, 14, 0]} scale={[1, 1, 1.4]} rotation={[-Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[38, 0.5, 64, 64]} />
+        <meshStandardMaterial color="#F59E0B" />
+      </mesh>
+      
+      {/* Inner Rim Light */}
+      <mesh position={[0, 13.9, 0]} scale={[1, 1, 1.4]} rotation={[-Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[28, 0.2, 16, 64]} />
+        <meshBasicMaterial color="#34D399" />
       </mesh>
     </group>
   )
