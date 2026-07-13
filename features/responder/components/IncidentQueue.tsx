@@ -11,13 +11,10 @@ export function IncidentQueue() {
   const { user } = useAuthStore()
   
   // Default filter based on role, but can be overridden
-  const [filter, setFilter] = React.useState<"All" | "Security" | "Medical">("All")
+  const [filter, setFilter] = React.useState<"All" | "Security" | "Medical">(() => 
+    user?.role === "Security" ? "Security" : user?.role === "Medical" ? "Medical" : "All"
+  )
   const [statusFilter, setStatusFilter] = React.useState<"active" | "resolved">("active")
-
-  React.useEffect(() => {
-    if (user?.role === "Security") setFilter("Security")
-    if (user?.role === "Medical") setFilter("Medical")
-  }, [user])
 
   const filteredEvents = events.filter(e => {
     if (statusFilter !== e.status) return false
@@ -39,7 +36,7 @@ export function IncidentQueue() {
             {["All", "Security", "Medical"].map(f => (
               <button 
                 key={f}
-                onClick={() => setFilter(f as any)}
+                onClick={() => setFilter(f as "All" | "Security" | "Medical")}
                 className={`px-2 py-1 rounded border ${filter === f ? 'bg-primary-accent/20 border-primary-accent text-primary-accent font-medium' : 'bg-white/5 border-white/10 text-muted-text'}`}
               >
                 {f}
