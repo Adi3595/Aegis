@@ -1,3 +1,4 @@
+import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import AnyHttpUrl, validator
 from typing import List, Union
@@ -8,7 +9,7 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
     
-    SECRET_KEY: str = "supersecretkey"
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "supersecretkey")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
@@ -21,7 +22,7 @@ class Settings(BaseSettings):
             return []
         return [item.strip() for item in self.BACKEND_CORS_ORIGINS.split(",") if item.strip()]
 
-    DATABASE_URL: str = "sqlite+aiosqlite:///./test.db"
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./test.db")
     
     @validator("DATABASE_URL", pre=True)
     def assemble_db_connection(cls, v: str | None) -> str:
@@ -35,10 +36,10 @@ class Settings(BaseSettings):
                 v = v.replace("sslmode=", "ssl=")
         return v
 
-    REDIS_URL: str = "redis://localhost:6379"
+    REDIS_URL: str = os.getenv("REDIS_URL", "redis://localhost:6379")
 
     # Groq
-    GROQ_API_KEY: str = ""
+    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
 
     model_config = SettingsConfigDict(case_sensitive=True, env_file=".env")
 
